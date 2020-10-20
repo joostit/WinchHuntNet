@@ -36,6 +36,7 @@ steps:
       **\*.UnitTests.dll
       !**\*TestAdapter.dll
       !**\obj\**
+    codeCoverageEnabled: True
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     testRunTitle: UnitTests
@@ -48,6 +49,7 @@ steps:
       **\*.ComponentTests.dll
       !**\*TestAdapter.dll
       !**\obj\**
+    codeCoverageEnabled: True
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     testRunTitle: ComponentTests

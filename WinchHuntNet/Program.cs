@@ -1,4 +1,6 @@
-﻿using System;
+﻿using JoostIT.WinchHunt.HunterConnectionLib;
+using System;
+using System.Collections.Generic;
 
 namespace WinchHuntNet
 {
@@ -6,7 +8,9 @@ namespace WinchHuntNet
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            HunterConnector connector = new HunterConnector();
+            List<String> ports = connector.GetAvailablePorts();
+            connector.Connect("COM1", 9800);
         }
     }
 }

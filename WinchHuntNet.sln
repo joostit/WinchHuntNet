@@ -4,6 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinchHuntNet", "WinchHuntNet\WinchHuntNet.csproj", "{A319862C-5E5C-4D00-AA61-715371F626D2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{969FACF1-551A-40E7-8816-BA4626BF9DD3} = {969FACF1-551A-40E7-8816-BA4626BF9DD3}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoostIT.WinchHunt.HunterConnectionLib", "JoostIT.WinchHunt.HunterConnectionLib\JoostIT.WinchHunt.HunterConnectionLib.csproj", "{969FACF1-551A-40E7-8816-BA4626BF9DD3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{382CAF91-98F2-440C-8C02-052D7ADE0BC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FC5BD0CF-A444-4250-87C9-7551CEEF3680}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoostIT.WinchHunt.HunterConnectionLib.UnitTests", "JoostIT.WinchHunt.HunterConnectionLib.UnitTests\JoostIT.WinchHunt.HunterConnectionLib.UnitTests.csproj", "{9050F2E9-A8C2-4407-B2DC-BC99389D466A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +26,22 @@ Global
 		{A319862C-5E5C-4D00-AA61-715371F626D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A319862C-5E5C-4D00-AA61-715371F626D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A319862C-5E5C-4D00-AA61-715371F626D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{969FACF1-551A-40E7-8816-BA4626BF9DD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{969FACF1-551A-40E7-8816-BA4626BF9DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{969FACF1-551A-40E7-8816-BA4626BF9DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{969FACF1-551A-40E7-8816-BA4626BF9DD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9050F2E9-A8C2-4407-B2DC-BC99389D466A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9050F2E9-A8C2-4407-B2DC-BC99389D466A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9050F2E9-A8C2-4407-B2DC-BC99389D466A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9050F2E9-A8C2-4407-B2DC-BC99389D466A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A319862C-5E5C-4D00-AA61-715371F626D2} = {382CAF91-98F2-440C-8C02-052D7ADE0BC3}
+		{969FACF1-551A-40E7-8816-BA4626BF9DD3} = {382CAF91-98F2-440C-8C02-052D7ADE0BC3}
+		{9050F2E9-A8C2-4407-B2DC-BC99389D466A} = {FC5BD0CF-A444-4250-87C9-7551CEEF3680}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C17B565-AFFB-46DC-AD38-28D09F7CC948}

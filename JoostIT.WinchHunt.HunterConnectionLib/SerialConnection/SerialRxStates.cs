@@ -8,6 +8,7 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.SerialConnection
     {
         Idle,
         ReadingStart,
+        ReadingType,
         ReadingLength,
         ReadingData,
         ReadingEnd

@@ -60,14 +60,20 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.SerialConnection
                     ReceiveStartSequence(character);
                     break;
 
+                case SerialRxStates.ReadingType:
+                    ReceiveTypeChars(character);
+                    break;
+
                 case SerialRxStates.ReadingLength:
                     ReceiveLengthChars(character);
                     break;
 
                 case SerialRxStates.ReadingData:
+                    ReceiveData(character);
                     break;
 
                 case SerialRxStates.ReadingEnd:
+                    ReceiveEndSequence(character);
                     break;
 
                 default:
@@ -99,12 +105,41 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.SerialConnection
                 if(fieldRxBuffer.Length == SerialPacket.StartSequence.Length)
                 {
                     
-                    SetRxState(SerialRxStates.ReadingLength);
+                    SetRxState(SerialRxStates.ReadingType);
                 }
             }
             else
             {
                 SetRxState(SerialRxStates.Idle);
+            }
+        }
+
+
+        private void ReceiveTypeChars(char character)
+        {
+            if (fieldRxBuffer.Length >= SerialPacket.TypeFieldLength) { throw new ConstraintException("Bug: Trying to read more type characters than the type field length is "); }
+
+            fieldRxBuffer.Append(character);
+
+            if (fieldRxBuffer.Length == SerialPacket.TypeFieldLength)
+            {
+                switch (fieldRxBuffer.ToString())
+                {
+                    case "LR":
+                        CurrentPacket.PacketType = SerialPacketTypes.LoraRx;
+                        SetRxState(SerialRxStates.ReadingLength);
+                        break;
+
+                    case "HB":
+                        CurrentPacket.PacketType = SerialPacketTypes.HeartBeat;
+                        SetRxState(SerialRxStates.ReadingLength);
+                        break;
+
+                    default:
+                        SetRxState(SerialRxStates.Idle);
+                        break;
+                }
+               
             }
         }
 
@@ -117,12 +152,19 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.SerialConnection
 
             if(fieldRxBuffer.Length == SerialPacket.LengthFieldLength)
             {
-                
-
                 try
                 {
                     CurrentPacket.DataLength = Convert.ToInt32(fieldRxBuffer.ToString());
-                    SetRxState(SerialRxStates.ReadingData);
+                    if (CurrentPacket.DataLength > 0)
+                    {
+                        SetRxState(SerialRxStates.ReadingData);
+                    }
+                    else
+                    {
+                        // If this packet has zero length data, skip reading it.
+                        CurrentPacket.Data = String.Empty;
+                        SetRxState(SerialRxStates.ReadingEnd);
+                    }
                 }
                 catch(FormatException)
                 {
@@ -130,6 +172,43 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.SerialConnection
                     SetRxState(SerialRxStates.Idle);
                 }
             }
+        }
+
+
+        private void ReceiveData(char character)
+        {
+            if (fieldRxBuffer.Length >= CurrentPacket.DataLength) { throw new ConstraintException("Bug: Trying to read more data characters than the Length field indicates"); }
+
+            fieldRxBuffer.Append(character);
+
+            if(fieldRxBuffer.Length == CurrentPacket.DataLength)
+            {
+                CurrentPacket.Data = fieldRxBuffer.ToString();
+                SetRxState(SerialRxStates.ReadingEnd);
+            }
+        }
+
+
+        private void ReceiveEndSequence(char character)
+        {
+            if (fieldRxBuffer.Length >= SerialPacket.EndSequence.Length) { throw new ConstraintException("Bug: Trying to find more End sequence characters than the sequence length itself"); }
+
+            if (character.Equals(SerialPacket.EndSequence[fieldRxBuffer.Length]))
+            {
+                fieldRxBuffer.Append(character);
+
+                // If we have enough valid characters in a row, we have a complete and valid packet
+                if (fieldRxBuffer.Length == SerialPacket.EndSequence.Length)
+                {
+                    RaisePacketReceived(CurrentPacket);
+                    SetRxState(SerialRxStates.Idle);
+                }
+            }
+            else
+            {
+                SetRxState(SerialRxStates.Idle);
+            }
+
 
         }
 
@@ -147,7 +226,7 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.SerialConnection
             }
 
             // Now we're actually starting to have a packet
-            if (newState == SerialRxStates.ReadingLength)
+            if (newState == SerialRxStates.ReadingType)
             {
                 CurrentPacket = new SerialPacket();
             }

@@ -8,6 +8,7 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.SerialConnection
     {
 
         internal const int LengthFieldLength = 4;
+        internal const int TypeFieldLength = 2;
 
         internal const string StartSequence = "W#L_";
 
@@ -16,6 +17,8 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.SerialConnection
         public int DataLength { get; internal set; }
 
         public string Data { get; internal set; }
+
+        public SerialPacketTypes PacketType { get; set; }
 
     }
 }

@@ -18,6 +18,7 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.UnitTests
             Assert.AreEqual(SerialRxStates.Idle, builder.RxState);
         }
 
+
         [TestMethod]
         public void TestNoPacketAtIdle()
         {
@@ -25,7 +26,6 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.UnitTests
             builder.Reset();
             Assert.IsNull(builder.CurrentPacket);
         }
-
 
 
         [TestMethod]
@@ -49,6 +49,7 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.UnitTests
             Assert.AreEqual(SerialRxStates.ReadingStart, builder.RxState);
         }
 
+
         [TestMethod]
         public void TestInvalidCharInStartSequenceSetsToIdle()
         {
@@ -61,22 +62,67 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.UnitTests
 
 
         [TestMethod]
-        public void TestValidStartSequenceSetsToReadingLength()
+        public void TestValidStartSequenceSetsToReadingType()
         {
             SerialPacketBuilder builder = new SerialPacketBuilder();
 
             builder.ProcessSerialData("W#L_");
+
+            Assert.AreEqual(SerialRxStates.ReadingType, builder.RxState);
+        }
+
+
+        [TestMethod]
+        public void TestValidTypeFieldSetsToReadingLength()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("W#L_LR");
 
             Assert.AreEqual(SerialRxStates.ReadingLength, builder.RxState);
         }
 
 
         [TestMethod]
-        public void TestValidlengthFieldSetsDreadingData()
+        public void TestLRTypeFieldSetsLoraRxType()
         {
             SerialPacketBuilder builder = new SerialPacketBuilder();
 
-            builder.ProcessSerialData("W#L_1234");
+            builder.ProcessSerialData("W#L_LR");
+
+            Assert.AreEqual(SerialPacketTypes.LoraRx, builder.CurrentPacket.PacketType);
+        }
+
+
+        [TestMethod]
+        public void TestHBTypeFieldSetHeartBeatType()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("W#L_HB");
+
+            Assert.AreEqual(SerialPacketTypes.HeartBeat, builder.CurrentPacket.PacketType);
+        }
+
+
+        [TestMethod]
+        public void TestInvalidTypeFieldResetsToIdle()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("W#L_xx");
+
+            Assert.AreEqual(SerialRxStates.Idle, builder.RxState);
+        }
+
+
+
+        [TestMethod]
+        public void TestValidlengthFieldSetsReadingData()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("W#L_HB1234");
 
             Assert.AreEqual(SerialRxStates.ReadingData, builder.RxState);
         }
@@ -87,9 +133,105 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.UnitTests
         {
             SerialPacketBuilder builder = new SerialPacketBuilder();
 
-            builder.ProcessSerialData("W#L_1234");
+            builder.ProcessSerialData("W#L_LR1234");
 
             Assert.AreEqual(1234, builder.CurrentPacket.DataLength);
+        }
+
+
+        [TestMethod]
+        public void TestZerolengthSkipsToEndSequence()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("W#L_LR0000");
+
+            Assert.AreEqual(SerialRxStates.ReadingEnd, builder.RxState);
+        }
+
+
+        [TestMethod]
+        public void TestZerolengthCreatesEmptyDataString()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("W#L_LR0000");
+
+            Assert.AreEqual(String.Empty, builder.CurrentPacket.Data);
+        }
+
+
+        [TestMethod]
+        public void TestInvalidlengthFieldValueSetsToIdle()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("W#L_LR12Z4");
+
+            Assert.AreEqual(SerialRxStates.Idle, builder.RxState);
+        }
+
+
+        [TestMethod]
+        public void TestFullDataReadSetsToReadingEndSequence()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("W#L_LR0005ABCDE");
+
+            Assert.AreEqual(SerialRxStates.ReadingEnd, builder.RxState);
+        }
+
+
+        [TestMethod]
+        public void TestFullDataReadSavesDataInCurrentPacket()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("W#L_LR0005ABCDE");
+
+            Assert.AreEqual("ABCDE", builder.CurrentPacket.Data);
+        }
+
+
+        [TestMethod]
+        public void TestFullValidPacketRaisesNewPacketEvent()
+        {
+            int eventCount = 0;
+
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+            builder.PacketReceived += (s, e) =>
+            {
+                eventCount++;
+                Assert.AreEqual(5, e.Packet.DataLength);
+                Assert.AreEqual("ABCDE", e.Packet.Data);
+                Assert.AreEqual(SerialPacketTypes.LoraRx, e.Packet.PacketType);
+            };
+            
+
+            builder.ProcessSerialData("W#L_LR0005ABCDE_H^\n");
+
+            Assert.AreEqual(1, eventCount);
+            
+        }
+
+
+        [TestMethod]
+        public void TestValidPacketWithInvalidEndSequenceResetsToIdle()
+        {
+            int eventCount = 0;
+
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+            builder.PacketReceived += (s, e) =>
+            {
+                eventCount++;
+            };
+
+            builder.ProcessSerialData("W#L_LR0005ABCDE_H^x");
+
+            Assert.AreEqual(0, eventCount);
+            Assert.AreEqual(SerialRxStates.Idle, builder.RxState);
+
         }
 
 

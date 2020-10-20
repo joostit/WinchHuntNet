@@ -20,6 +20,25 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.UnitTests
 
 
         [TestMethod]
+        public void TestNullStringThrowsArgumentNullException()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            Assert.ThrowsException<ArgumentNullException>(() => builder.ProcessSerialData(null));
+        }
+
+
+        [TestMethod]
+        public void TestEmptyStringDoesNothing()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("");
+            Assert.AreEqual(SerialRxStates.Idle, builder.RxState);
+        }
+
+
+        [TestMethod]
         public void TestNoPacketAtIdle()
         {
             SerialPacketBuilder builder = new SerialPacketBuilder();

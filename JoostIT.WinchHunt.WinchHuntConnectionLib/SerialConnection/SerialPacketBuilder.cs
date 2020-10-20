@@ -7,8 +7,7 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection
 {
     internal class SerialPacketBuilder
     {
-        public SerialRxStates RxState { get; private set; } = SerialRxStates.Idle;
-
+        internal SerialRxStates RxState { get; private set; } = SerialRxStates.Idle;
         internal SerialPacket CurrentPacket { get; private set; } = null;
         private StringBuilder fieldRxBuffer;
 
@@ -27,7 +26,9 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection
         /// <param name="data">Newly received data from the serial port</param>
         public void ProcessSerialData(String data)
         {
-            foreach(var character in data)
+            if (data == null) { throw new ArgumentNullException("data"); }
+
+            foreach (var character in data)
             {
                 ProcessCharacter(character);
             }
@@ -47,6 +48,7 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection
         {
             PacketReceived?.Invoke(this, new NewSerialPacketEventArgs(packet));
         }
+
 
         private void ProcessCharacter(char character)
         {
@@ -208,8 +210,6 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection
             {
                 SetRxState(SerialRxStates.Idle);
             }
-
-
         }
 
 

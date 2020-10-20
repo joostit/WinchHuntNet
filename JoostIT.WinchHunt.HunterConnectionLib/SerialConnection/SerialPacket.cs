@@ -7,13 +7,15 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.SerialConnection
     public class SerialPacket
     {
 
-        public const string StartSequence = "W#L_";
+        internal const int LengthFieldLength = 4;
 
-        public const string EndSequence = "_H^\n";
+        internal const string StartSequence = "W#L_";
 
-        public int DataLength { get; set; }
+        internal const string EndSequence = "_H^\n";
 
-        public string Data { get; set; }
+        public int DataLength { get; internal set; }
+
+        public string Data { get; internal set; }
 
     }
 }

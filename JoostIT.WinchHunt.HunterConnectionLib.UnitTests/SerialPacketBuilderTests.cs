@@ -18,8 +18,16 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.UnitTests
             Assert.AreEqual(SerialRxStates.Idle, builder.RxState);
         }
 
+        [TestMethod]
+        public void TestNoPacketAtIdle()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+            builder.Reset();
+            Assert.IsNull(builder.CurrentPacket);
+        }
 
-        
+
+
         [TestMethod]
         public void TestIgnoreGarbage()
         {
@@ -60,6 +68,28 @@ namespace JoostIT.WinchHunt.HunterConnectionLib.UnitTests
             builder.ProcessSerialData("W#L_");
 
             Assert.AreEqual(SerialRxStates.ReadingLength, builder.RxState);
+        }
+
+
+        [TestMethod]
+        public void TestValidlengthFieldSetsDreadingData()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("W#L_1234");
+
+            Assert.AreEqual(SerialRxStates.ReadingData, builder.RxState);
+        }
+
+
+        [TestMethod]
+        public void TestValidlengthFieldValue()
+        {
+            SerialPacketBuilder builder = new SerialPacketBuilder();
+
+            builder.ProcessSerialData("W#L_1234");
+
+            Assert.AreEqual(1234, builder.CurrentPacket.DataLength);
         }
 
 

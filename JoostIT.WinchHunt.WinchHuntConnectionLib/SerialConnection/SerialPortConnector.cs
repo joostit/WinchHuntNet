@@ -4,7 +4,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 
-namespace JoostIT.WinchHunt.HunterConnectionLib.SerialConnection
+namespace JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection
 {
     internal class SerialPortConnector : IDisposable
     {

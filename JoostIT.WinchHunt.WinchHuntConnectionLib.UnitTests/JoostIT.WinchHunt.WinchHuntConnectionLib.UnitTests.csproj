@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JoostIT.WinchHunt.HunterConnectionLib\JoostIT.WinchHunt.HunterConnectionLib.csproj" />
+    <ProjectReference Include="..\JoostIT.WinchHunt.WinchHuntConnectionLib\JoostIT.WinchHunt.WinchHuntConnectionLib.csproj" />
   </ItemGroup>
 
 </Project>

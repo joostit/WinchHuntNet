@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace JoostIT.WinchHunt.HunterConnectionLib.Messaging
+namespace JoostIT.WinchHunt.WinchHuntConnectionLib.LoraMessaging
 {
     internal class LoraPacket
     {

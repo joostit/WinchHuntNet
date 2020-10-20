@@ -1,4 +1,4 @@
-using JoostIT.WinchHunt.HunterConnectionLib.Messaging;
+using JoostIT.WinchHunt.WinchHuntConnectionLib.LoraMessaging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 

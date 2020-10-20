@@ -61,7 +61,7 @@ steps:
     command: 'publish'
     configuration: $(BuildConfiguration)
     publishWebProjects: false
-    projects: 'WinchHuntNet/WinchHuntNet.csproj'
+    projects: 'JoostIT.WinchHunt.WinchHuntCmd/JoostIT.WinchHunt.WinchHuntCmd.csproj'
   
 
 

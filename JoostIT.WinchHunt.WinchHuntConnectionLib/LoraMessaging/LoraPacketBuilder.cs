@@ -1,10 +1,9 @@
-﻿using JoostIT.WinchHunt.HunterConnectionLib.SerialConnection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace JoostIT.WinchHunt.HunterConnectionLib.Messaging
+namespace JoostIT.WinchHunt.WinchHuntConnectionLib.LoraMessaging
 {
     internal class LoraPacketBuilder
     {

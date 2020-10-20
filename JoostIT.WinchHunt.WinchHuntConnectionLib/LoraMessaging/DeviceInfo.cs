@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace JoostIT.WinchHunt.HunterConnectionLib.Messaging
+namespace JoostIT.WinchHunt.WinchHuntConnectionLib.LoraMessaging
 {
     public class DeviceInfo
     {

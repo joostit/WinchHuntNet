@@ -1,14 +1,14 @@
-﻿using JoostIT.WinchHunt.HunterConnectionLib.SerialConnection;
+﻿using JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection;
 using System;
 using System.Collections.Generic;
 
-namespace JoostIT.WinchHunt.HunterConnectionLib
+namespace JoostIT.WinchHunt.WinchHuntConnectionLib
 {
-    public class HunterConnector : IDisposable
+    public class WinchHuntConnector : IDisposable
     {
 
 
-        ~HunterConnector() => Dispose(false);
+        ~WinchHuntConnector() => Dispose(false);
 
 
         SerialPortConnector serialConnection = new SerialPortConnector();

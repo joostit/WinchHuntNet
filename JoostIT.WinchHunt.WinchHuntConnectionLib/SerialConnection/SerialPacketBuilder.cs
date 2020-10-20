@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 
-namespace JoostIT.WinchHunt.HunterConnectionLib.SerialConnection
+namespace JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection
 {
     internal class SerialPacketBuilder
     {

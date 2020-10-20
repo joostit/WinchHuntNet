@@ -55,8 +55,9 @@ steps:
 
 - task: DotNetCoreCLI@2
   inputs:
-    packDirectory: 'publish'
+    arguments: '--output $(Build.ArtifactStagingDirectory)'
     command: 'publish'
+    configuration: $(BuildConfiguration)
     publishWebProjects: false
     projects: 'WinchHuntNet/WinchHuntNet.csproj'
   

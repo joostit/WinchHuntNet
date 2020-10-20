@@ -29,7 +29,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
-  displayName: Unit Tests
+  displayName: Run Unit Tests
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
@@ -41,7 +41,7 @@ steps:
     testRunTitle: UnitTests
     
 - task: VSTest@2
-  displayName: Component Tests
+  displayName: Run Component Tests
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
@@ -51,6 +51,14 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     testRunTitle: ComponentTests
+
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: 'WinchHuntNet/WinchHuntNet.csproj'
+
 
 - task: PublishBuildArtifacts@1
   inputs:

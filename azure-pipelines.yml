@@ -22,12 +22,14 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: VSBuild@1
+  displayName: Build solution
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
+  displayName: Unit Tests
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
@@ -37,6 +39,18 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     testRunTitle: UnitTests
+    
+- task: VSTest@2
+  displayName: Component Tests
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*.ComponentTests.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    testRunTitle: ComponentTests
 
 - task: PublishBuildArtifacts@1
   inputs:

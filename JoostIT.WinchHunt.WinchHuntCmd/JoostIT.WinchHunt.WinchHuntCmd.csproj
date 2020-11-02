@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JoostIT.WinchHunt.WinchHuntConnectionLib\JoostIT.WinchHunt.WinchHuntConnectionLib.csproj" />
+    <ProjectReference Include="..\JoostIT.WinchHunt.WinchHuntNet\JoostIT.WinchHunt.WinchHuntNet.csproj" />
   </ItemGroup>
 
 </Project>

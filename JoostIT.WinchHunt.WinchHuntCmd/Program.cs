@@ -1,4 +1,4 @@
-﻿using JoostIT.WinchHunt.WinchHuntConnectionLib;
+﻿using JoostIT.WinchHunt.WinchHuntNet;
 using System;
 
 namespace JoostIT.WinchHunt.WinchHuntCmd

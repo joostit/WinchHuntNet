@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace JoostIT.WinchHunt.WinchHuntConnectionLib.LoraMessaging
+namespace JoostIT.WinchHunt.WinchHuntConnectionLib.Data
 {
     public class DeviceInfo
     {
@@ -15,7 +15,7 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib.LoraMessaging
         public string Id { get; set; }
 
         [JsonPropertyName("hw")]
-        public double Hardware { get; set; }
+        public string Hardware { get; set; }
 
         [JsonPropertyName("v")]
         public int Version { get; set; }

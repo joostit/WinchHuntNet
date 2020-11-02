@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace JoostIT.WinchHunt.WinchHuntConnectionLib.LoraMessaging
+namespace JoostIT.WinchHunt.WinchHuntConnectionLib.Data
 {
     public class GpsInfo
     {

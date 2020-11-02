@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace JoostIT.WinchHunt.WinchHuntConnectionLib.Data
+namespace JoostIT.WinchHunt.WinchHuntConnectionLib.LoraMessaging
 {
-    public class FoxMessage
+    internal class FoxMessage
     {
         [JsonPropertyName("dev")]
-        public DeviceInfo Device { get; set; }
+        public LoraDeviceInfo Device { get; set; }
 
         [JsonPropertyName("gps")]
-        public GpsInfo Gps { get; set; }
+        public LoraGpsInfo Gps { get; set; }
     }
 }

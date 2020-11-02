@@ -1,33 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json.Serialization;
 
 namespace JoostIT.WinchHunt.WinchHuntConnectionLib.Data
 {
     public class GpsInfo
     {
 
-        [JsonPropertyName("lat")]
-        public double Latitude { get; set; }
+        public double Latitude { get; internal set; }
 
-        [JsonPropertyName("lon")]
-        public double Longitude { get; set; }
+        public double Longitude { get; internal set; }
 
-        [JsonPropertyName("sats")]
-        public int Satellites { get; set; }
+        public int Satellites { get; internal set; }
 
-        [JsonPropertyName("spd")]
-        public double Speed { get; set; }
+        public double Speed { get; internal set; }
 
-        [JsonPropertyName("alt")]
-        public double Altitude { get; set; }
+        public double Altitude { get; internal set; }
 
-        [JsonPropertyName("hdop")]
-        public double Hdop { get; set; }
+        public double Hdop { get; internal set; }
 
-        [JsonPropertyName("fix")]
-        public bool hasFix { get; set; }
+        public bool hasFix { get; internal set; }
 
     }
 }

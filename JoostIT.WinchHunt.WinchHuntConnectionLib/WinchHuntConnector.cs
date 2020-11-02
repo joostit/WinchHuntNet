@@ -1,5 +1,4 @@
-﻿using JoostIT.WinchHunt.WinchHuntConnectionLib.Data;
-using JoostIT.WinchHunt.WinchHuntConnectionLib.LoraMessaging;
+﻿using JoostIT.WinchHunt.WinchHuntConnectionLib.LoraMessaging;
 using JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection;
 using System;
 using System.Collections.Generic;
@@ -12,16 +11,12 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib
 
         private const int BaudRate = 115200;
         private SerialPortConnector serialConnection;
-        public List<string> GetAvailablePorts() => SerialPortConnector.GetAvailablePorts();
         private LoraPacketBuilder lorapacketBuilder = new LoraPacketBuilder();
 
-        public WinchHuntConnector()
-        {
 
-        }
+        public DeviceManager DeviceManager { get; private set; } = new DeviceManager();
 
-        ~WinchHuntConnector() => Dispose(false);
-
+        
         public void Connect(string portName)
         {
 
@@ -41,6 +36,10 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib
             }
         }
 
+        public List<string> GetAvailablePorts()
+        {
+            return SerialPortConnector.GetAvailablePorts();
+        }
 
         private void SerialConnection_NewSerialPacket(object sender, NewSerialPacketEventArgs e)
         {
@@ -56,8 +55,8 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib
                 default:
                     throw new NotSupportedException($"Unsupported packet type: {e.Packet.PacketType}");
             }
-            
         }
+
 
         private void ProcessLoraPacketReceived(SerialPacket serialPacket)
         {
@@ -65,9 +64,9 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib
 
             FoxMessage message = JsonSerializer.Deserialize<FoxMessage>(loraPacket.JsonData);
 
-            // ToDo: Dispatch the Lora packet from here
-
+            DeviceManager.ProcessFoxMessage(message);
         }
+
 
         public void Dispose()
         {
@@ -86,6 +85,33 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib
                 }
             }
         }
+
+
+        public WinchHuntConnector()
+        {
+            DeviceManager.FoxAdded += DeviceManager_FoxAdded;
+            DeviceManager.FoxUpdated += DeviceManager_FoxUpdated;
+            DeviceManager.FoxRemoved += DeviceManager_FoxRemoved;
+        }
+
+        private void DeviceManager_FoxRemoved(object sender, Data.DeviceEventArgs e)
+        {
+            Console.WriteLine($"Fox Removed: {e.Device.Id}");
+        }
+
+        private void DeviceManager_FoxUpdated(object sender, Data.DeviceEventArgs e)
+        {
+            Console.WriteLine($"Fox Updated: {e.Device.Id}");
+        }
+
+        private void DeviceManager_FoxAdded(object sender, Data.DeviceEventArgs e)
+        {
+            Console.WriteLine($"Fox Added: {e.Device.Id}");
+        }
+
+        ~WinchHuntConnector() => Dispose(false);
+
+
 
     }
 }

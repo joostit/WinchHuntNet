@@ -17,11 +17,6 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection
         public event EventHandler<NewSerialPacketEventArgs> NewSerialPacket;
 
 
-        public SerialPortConnector()
-        {
-            packetBuilder.PacketReceived += PacketBuilder_PacketReceived;
-        }
-
         internal static List<string> GetAvailablePorts()
         {
             return SerialPort.GetPortNames().ToList<string>();
@@ -37,7 +32,6 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection
             {
                 throw new InvalidOperationException($"Serial port '{portName}' does not exist.");
             }
-
 
             port = new SerialPort(portName, baudrate, Parity.None, 8);
 
@@ -65,20 +59,18 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection
         }
 
 
-
         private bool IsValidPort(string portName)
         {
             return GetAvailablePorts().Contains(portName);
         }
 
 
-        ~SerialPortConnector() => Dispose(false);
-
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
+
 
         virtual protected void Dispose(bool disposing)
         {
@@ -90,5 +82,14 @@ namespace JoostIT.WinchHunt.WinchHuntConnectionLib.SerialConnection
                 }
             }
         }
+
+
+        public SerialPortConnector()
+        {
+            packetBuilder.PacketReceived += PacketBuilder_PacketReceived;
+        }
+
+
+        ~SerialPortConnector() => Dispose(false);
     }
 }

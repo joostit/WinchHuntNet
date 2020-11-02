@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json.Serialization;
 
 namespace JoostIT.WinchHunt.WinchHuntConnectionLib.Data
 {
     public class DeviceInfo
     {
 
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string Name { get; internal set; }
 
-        [JsonPropertyName("id")]
-        public string Id { get; set; }
+        public string Id { get; internal set; }
 
-        [JsonPropertyName("hw")]
-        public string Hardware { get; set; }
+        public string Hardware { get; internal set; }
 
-        [JsonPropertyName("v")]
-        public int Version { get; set; }
+        public int Version { get; internal set; }
 
+        public DeviceTypes DeviceType { get; internal set; }
+
+        internal DeviceInfo()
+        {
+
+        }
     }
 }

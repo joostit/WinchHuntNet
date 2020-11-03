@@ -64,6 +64,14 @@ steps:
     projects: 'JoostIT.WinchHunt.WinchHuntCmd/JoostIT.WinchHunt.WinchHuntCmd.csproj'
   
 
+- task: DotNetCoreCLI@2
+  displayName: "Create NuGet Package"
+  inputs:
+    command: 'pack'
+    arguments: '--configuration $(buildConfiguration)'
+    packagesToPack: 'JoostIT.WinchHunt.WinchHuntNet/JoostIT.WinchHunt.WinchHuntNet.csproj'
+    nobuild: true
+    versioningScheme: 'off'
 
 
 - task: PublishBuildArtifacts@1
@@ -71,3 +79,4 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+

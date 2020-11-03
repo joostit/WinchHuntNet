@@ -115,19 +115,19 @@ namespace JoostIT.WinchHunt.WinchHuntNet
 
         private void DeviceManager_FoxRemoved(object sender, Data.DeviceEventArgs e)
         {
-            Console.WriteLine($"Fox Removed: {e.Device.Id}");
+            //Console.WriteLine($"Fox Removed: {e.Device.Id}");
         }
 
 
         private void DeviceManager_FoxUpdated(object sender, Data.DeviceEventArgs e)
         {
-            Console.WriteLine($"Fox Updated: {e.Device.Id}");
+            //Console.WriteLine($"Fox Updated: {e.Device.Id}");
         }
 
 
         private void DeviceManager_FoxAdded(object sender, Data.DeviceEventArgs e)
         {
-            Console.WriteLine($"Fox Added: {e.Device.Id}");
+            //Console.WriteLine($"Fox Added: {e.Device.Id}");
         }
 
 

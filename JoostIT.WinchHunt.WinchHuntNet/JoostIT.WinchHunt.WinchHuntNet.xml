@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JoostIT.WinchHunt.WinchHuntNet</name>
+    </assembly>
+    <members>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceEventArgs">
+            <summary>
+            Event argutments for Device related events
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceEventArgs.Device">
+            <summary>
+            Gets the device info for the device that concerns this event
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceEventArgs.#ctor(JoostIT.WinchHunt.WinchHuntNet.Data.DeviceInfo)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="device"></param>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceInfo">
+            <summary>
+            Holds information about a device
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceInfo.Name">
+            <summary>
+            The device name
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceInfo.Id">
+            <summary>
+            The device ID
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceInfo.Hardware">
+            <summary>
+            The device Hardware
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceInfo.Version">
+            <summary>
+            The device Version
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceInfo.DeviceType">
+            <summary>
+            The type of device
+            </summary>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceTypes">
+            <summary>
+            Defines different WinchHunt device types
+            </summary>
+        </member>
+        <member name="F:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceTypes.Unknown">
+            <summary>
+            Indicates an unknown device or an error
+            </summary>
+        </member>
+        <member name="F:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceTypes.Hunter">
+            <summary>
+            A Hunter
+            </summary>
+        </member>
+        <member name="F:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceTypes.Fox">
+            <summary>
+            A Fox
+            </summary>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.Data.GpsInfo">
+            <summary>
+            Holds GPS state information
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.GpsInfo.Latitude">
+            <summary>
+            Gets the latitude
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.GpsInfo.Longitude">
+            <summary>
+            Gets the longitute
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.GpsInfo.Satellites">
+            <summary>
+            Gets the number of satellites currently being tracked
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.GpsInfo.Speed">
+            <summary>
+            Gets the speed (in km/h)
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.GpsInfo.Altitude">
+            <summary>
+            Gets the altitude (in meters)
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.GpsInfo.Hdop">
+            <summary>
+            Gets the GPS HDOP value
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.GpsInfo.hasFix">
+            <summary>
+            Gets whether the GPS receiver has a valid fix
+            </summary>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.Data.WinchFox">
+            <summary>
+            Represents a Fox device in the WinchHunt system
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.WinchFox.Gps">
+            <summary>
+            Gets last known GPS state information
+            </summary>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.Data.WinchHuntDevice">
+            <summary>
+            A base class that represents any WinchHunt device
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.WinchHuntDevice.Device">
+            <summary>
+            Gets Device information
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.WinchHuntDevice.LastUpdate">
+            <summary>
+            Gets the time stamp of the last update that was received from the device
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.Data.WinchHuntDevice.SetLastUpdateNow">
+            <summary>
+            Call this method to indicate that information was updated and to update the time stamp.
+            </summary>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.DeviceManager">
+            <summary>
+            Manages devices. Note that instances of this class are not completely thread safe
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.DeviceManager.Foxes">
+            <summary>
+            Gets known foxes
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.DeviceManager.MaxFoxAge">
+            <summary>
+            The maximum timespan that a Fox can be inactive, before being removed from the Foxes collection.
+            </summary>
+        </member>
+        <member name="E:JoostIT.WinchHunt.WinchHuntNet.DeviceManager.FoxAdded">
+            <summary>
+            Gets raised when a new fox is added to the collection
+            </summary>
+        </member>
+        <member name="E:JoostIT.WinchHunt.WinchHuntNet.DeviceManager.FoxUpdated">
+            <summary>
+            Gets raised when a already known fox is updated
+            </summary>
+        </member>
+        <member name="E:JoostIT.WinchHunt.WinchHuntNet.DeviceManager.FoxRemoved">
+            <summary>
+            Gets raised when a fox is removed from the collection
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacketBuilder.ProcessSerialData(System.String)">
+            <summary>
+            Processes new Serial data to find packets. New packets will be raised via the PacketReceived event
+            </summary>
+            <param name="data">Newly received data from the serial port</param>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacketBuilder.Reset">
+            <summary>
+            Resets the builder by resetting the internal state machine to Idle
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPortConnector.Dispose">
+            <summary>
+            Closes the connection and disposes all resources
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPortConnector.Dispose(System.Boolean)">
+            <summary>
+            Disposes all resources
+            </summary>
+            <param name="disposing">True if called from Dispose(). False when called from the finalizer</param>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector">
+            <summary>
+            Main utility class that connects to a WinchHunt device
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.DeviceManager">
+            <summary>
+            Gets the device manager that holds access to all known devices
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.Connect(System.String)">
+            <summary>
+            Connects to a WinchHunt device over the serial port
+            </summary>
+            <param name="portName">The port name to connect to. Note that this is case sensitive!</param>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.GetAvailablePorts">
+            <summary>
+            Gets a list of all available serial ports
+            </summary>
+            <returns>A list of strings that contain the serial port names</returns>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.Dispose">
+            <summary>
+            Closes the connection and disposes all resources
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.Dispose(System.Boolean)">
+            <summary>
+            Disposes all resources
+            </summary>
+            <param name="disposing">True if called from Dispose(). False when called from the finalizer</param>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.#ctor">
+            <summary>
+            Constructor. Creates a new instance of this object
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+    </members>
+</doc>

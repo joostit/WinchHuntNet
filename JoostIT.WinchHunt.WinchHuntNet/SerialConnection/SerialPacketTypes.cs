@@ -4,7 +4,7 @@ using System.Text;
 
 namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
 {
-    public enum SerialPacketTypes
+    internal enum SerialPacketTypes
     {
         Invalid,
         LoraRx,

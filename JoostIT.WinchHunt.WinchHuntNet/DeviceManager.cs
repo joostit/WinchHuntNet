@@ -6,6 +6,10 @@ using System.Text;
 
 namespace JoostIT.WinchHunt.WinchHuntNet
 {
+
+    /// <summary>
+    /// Manages devices. Note that instances of this class are not completely thread safe
+    /// </summary>
     public class DeviceManager
     {
         private const int CleanupTimerInterval = 1000;
@@ -14,7 +18,10 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         private readonly Object devicesLock = new object();
         private Dictionary<string, WinchFox> foxes = new Dictionary<string, WinchFox>();
 
-        IReadOnlyDictionary<string, WinchFox> Foxes
+        /// <summary>
+        /// Gets known foxes
+        /// </summary>
+        public IReadOnlyDictionary<string, WinchFox> Foxes
         {
             get
             {
@@ -22,12 +29,24 @@ namespace JoostIT.WinchHunt.WinchHuntNet
             }
         }
 
-
+        /// <summary>
+        /// The maximum timespan that a Fox can be inactive, before being removed from the Foxes collection.
+        /// </summary>
         public TimeSpan MaxFoxAge { get; set; } = new TimeSpan(1, 0, 0, 0);
 
-
+        /// <summary>
+        /// Gets raised when a new fox is added to the collection
+        /// </summary>
         public event EventHandler<DeviceEventArgs> FoxAdded;
+        
+        /// <summary>
+        /// Gets raised when a already known fox is updated
+        /// </summary>
         public event EventHandler<DeviceEventArgs> FoxUpdated;
+
+        /// <summary>
+        /// Gets raised when a fox is removed from the collection
+        /// </summary>
         public event EventHandler<DeviceEventArgs> FoxRemoved;
 
 

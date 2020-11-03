@@ -4,15 +4,16 @@ using System.Text;
 
 namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
 {
-    public class SerialPacket
+    internal class SerialPacket
     {
 
-        internal const int LengthFieldLength = 4;
-        internal const int TypeFieldLength = 2;
+        public const int LengthFieldLength = 4;
 
-        internal const string StartSequence = "W#L_";
+        public const int TypeFieldLength = 2;
 
-        internal const string EndSequence = "_H^\n";
+        public const string StartSequence = "W#L_";
+
+        public const string EndSequence = "_H^\n";
 
         public int DataLength { get; internal set; }
 

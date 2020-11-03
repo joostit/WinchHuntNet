@@ -6,20 +6,30 @@ using System.Text.Json;
 
 namespace JoostIT.WinchHunt.WinchHuntNet
 {
+
+    /// <summary>
+    /// Main utility class that connects to a WinchHunt device
+    /// </summary>
     public class WinchHuntConnector : IDisposable
     {
-
+        private bool isDisposed = false;
         private const int BaudRate = 115200;
         private SerialPortConnector serialConnection;
         private LoraPacketBuilder lorapacketBuilder = new LoraPacketBuilder();
 
-
+        /// <summary>
+        /// Gets the device manager that holds access to all known devices
+        /// </summary>
         public DeviceManager DeviceManager { get; private set; } = new DeviceManager();
 
-        
+        /// <summary>
+        /// Connects to a WinchHunt device over the serial port
+        /// </summary>
+        /// <param name="portName">The port name to connect to. Note that this is case sensitive!</param>
         public void Connect(string portName)
         {
 
+            if (isDisposed) { throw new ObjectDisposedException("WinchHuntConnector"); }
             if (serialConnection != null) { throw new InvalidOperationException("Cannot connect while there's already a connection."); }
 
             try
@@ -36,10 +46,16 @@ namespace JoostIT.WinchHunt.WinchHuntNet
             }
         }
 
+
+        /// <summary>
+        /// Gets a list of all available serial ports
+        /// </summary>
+        /// <returns>A list of strings that contain the serial port names</returns>
         public List<string> GetAvailablePorts()
         {
             return SerialPortConnector.GetAvailablePorts();
         }
+
 
         private void SerialConnection_NewSerialPacket(object sender, NewSerialPacketEventArgs e)
         {
@@ -68,6 +84,9 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         }
 
 
+        /// <summary>
+        /// Closes the connection and disposes all resources
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
@@ -75,6 +94,10 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         }
 
 
+        /// <summary>
+        /// Disposes all resources
+        /// </summary>
+        /// <param name="disposing">True if called from Dispose(). False when called from the finalizer</param>
         virtual protected void Dispose(bool disposing)
         {
             if (disposing)
@@ -84,9 +107,33 @@ namespace JoostIT.WinchHunt.WinchHuntNet
                     serialConnection.Dispose();
                 }
             }
+            isDisposed = true;
         }
 
 
+
+
+        private void DeviceManager_FoxRemoved(object sender, Data.DeviceEventArgs e)
+        {
+            Console.WriteLine($"Fox Removed: {e.Device.Id}");
+        }
+
+
+        private void DeviceManager_FoxUpdated(object sender, Data.DeviceEventArgs e)
+        {
+            Console.WriteLine($"Fox Updated: {e.Device.Id}");
+        }
+
+
+        private void DeviceManager_FoxAdded(object sender, Data.DeviceEventArgs e)
+        {
+            Console.WriteLine($"Fox Added: {e.Device.Id}");
+        }
+
+
+        /// <summary>
+        /// Constructor. Creates a new instance of this object
+        /// </summary>
         public WinchHuntConnector()
         {
             DeviceManager.FoxAdded += DeviceManager_FoxAdded;
@@ -94,21 +141,10 @@ namespace JoostIT.WinchHunt.WinchHuntNet
             DeviceManager.FoxRemoved += DeviceManager_FoxRemoved;
         }
 
-        private void DeviceManager_FoxRemoved(object sender, Data.DeviceEventArgs e)
-        {
-            Console.WriteLine($"Fox Removed: {e.Device.Id}");
-        }
 
-        private void DeviceManager_FoxUpdated(object sender, Data.DeviceEventArgs e)
-        {
-            Console.WriteLine($"Fox Updated: {e.Device.Id}");
-        }
-
-        private void DeviceManager_FoxAdded(object sender, Data.DeviceEventArgs e)
-        {
-            Console.WriteLine($"Fox Added: {e.Device.Id}");
-        }
-
+        /// <summary>
+        /// Finalizer
+        /// </summary>
         ~WinchHuntConnector() => Dispose(false);
 
 

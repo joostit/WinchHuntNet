@@ -5,9 +5,16 @@ using System.Text;
 
 namespace JoostIT.WinchHunt.WinchHuntNet.Data
 {
+
+    /// <summary>
+    /// Represents a Fox device in the WinchHunt system
+    /// </summary>
     public class WinchFox : WinchHuntDevice
     {
 
+        /// <summary>
+        /// Gets last known GPS state information
+        /// </summary>
         public GpsInfo Gps { get; private set; }
 
 

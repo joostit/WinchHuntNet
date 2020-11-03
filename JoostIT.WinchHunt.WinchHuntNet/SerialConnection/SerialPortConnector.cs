@@ -9,7 +9,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
 {
     internal class SerialPortConnector : IDisposable
     {
-
+        private bool isDisposed = false;
         private SerialPort port;
 
         private SerialPacketBuilder packetBuilder = new SerialPacketBuilder();
@@ -26,6 +26,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
         internal void Connect(string portName, int baudrate)
         {
 
+            if (isDisposed) { throw new ObjectDisposedException("WinchHuntConnector"); }
             if (port != null) { throw new InvalidOperationException("Cannot open the port after it has already been opened (or attempted)"); }
 
             if (!IsValidPort(portName))
@@ -65,6 +66,9 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
         }
 
 
+        /// <summary>
+        /// Closes the connection and disposes all resources
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
@@ -72,6 +76,10 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
         }
 
 
+        /// <summary>
+        /// Disposes all resources
+        /// </summary>
+        /// <param name="disposing">True if called from Dispose(). False when called from the finalizer</param>
         virtual protected void Dispose(bool disposing)
         {
             if (disposing)
@@ -81,6 +89,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
                     port.Dispose();
                 }
             }
+            isDisposed = true;
         }
 
 

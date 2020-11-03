@@ -16,7 +16,7 @@ namespace JoostIT.WinchHunt.WinchHuntCmd
 
                 ports.ForEach((i) => Console.WriteLine(i));
 
-                connector.Connect("COM6");
+                connector.Connect("com6");
 
 
                 Console.ReadKey();

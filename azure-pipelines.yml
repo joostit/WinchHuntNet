@@ -57,6 +57,20 @@ steps:
     testRunTitle: ComponentTests
 
 
+- task: VSTest@2
+  displayName: 'Run integration tests'
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*.IntegrationTests.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    testRunTitle: 'Integration tests'
+
+
 - task: DotNetCoreCLI@2
   displayName: "Create NuGet Package"
   inputs:

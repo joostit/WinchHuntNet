@@ -16,13 +16,15 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+  displayName: 'Install NuGet'
 
 - task: NuGetCommand@2
+  displayName: 'Restore NuGet packages'
   inputs:
     restoreSolution: '$(solution)'
 
 - task: VSBuild@1
-  displayName: Build solution
+  displayName: 'Build solution'
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
@@ -56,17 +58,9 @@ steps:
 
 
 - task: DotNetCoreCLI@2
-  inputs:
-    arguments: '--output $(Build.ArtifactStagingDirectory)'
-    command: 'publish'
-    configuration: $(BuildConfiguration)
-    publishWebProjects: false
-    projects: 'JoostIT.WinchHunt.WinchHuntCmd/JoostIT.WinchHunt.WinchHuntCmd.csproj'
-  
-
-- task: DotNetCoreCLI@2
   displayName: "Create NuGet Package"
   inputs:
+    packDirectory: '$(Build.ArtifactStagingDirectory)/NuGet'
     command: 'pack'
     arguments: '--configuration $(buildConfiguration)'
     packagesToPack: 'JoostIT.WinchHunt.WinchHuntNet/JoostIT.WinchHunt.WinchHuntNet.csproj'
@@ -74,9 +68,26 @@ steps:
     versioningScheme: 'off'
 
 
-- task: PublishBuildArtifacts@1
+- task: DotNetCoreCLI@2
+  displayName: 'Create WinchHuntCmd publish'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
+    arguments: '--output $(Build.ArtifactStagingDirectory)/WinchHuntCmd'
+    command: 'publish'
+    configuration: $(BuildConfiguration)
+    publishWebProjects: false
+    projects: 'JoostIT.WinchHunt.WinchHuntCmd/JoostIT.WinchHunt.WinchHuntCmd.csproj'
+
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifact WinchHuntCmd'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/WinchHuntCmd'
+    ArtifactName: 'TestApp'
     publishLocation: 'Container'
 
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifact NuGet Package'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/NuGet'
+    ArtifactName: 'TestApp'
+    publishLocation: 'Container'

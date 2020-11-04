@@ -108,4 +108,4 @@ steps:
 - task: shellexec@0
   displayName: 'Push to GitHub'
   inputs:
-    code: 'git push https://$(VSTSToken)@github.com/joostit/WinchHuntNet.git -u --all --force'
+    code: 'git push https://$(GitHubToken)@github.com/joostit/WinchHuntNet.git -u --all --force'

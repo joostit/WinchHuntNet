@@ -111,34 +111,12 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         }
 
 
-
-
-        private void DeviceManager_FoxRemoved(object sender, Data.DeviceEventArgs e)
-        {
-            //Console.WriteLine($"Fox Removed: {e.Device.Id}");
-        }
-
-
-        private void DeviceManager_FoxUpdated(object sender, Data.DeviceEventArgs e)
-        {
-            //Console.WriteLine($"Fox Updated: {e.Device.Id}");
-        }
-
-
-        private void DeviceManager_FoxAdded(object sender, Data.DeviceEventArgs e)
-        {
-            //Console.WriteLine($"Fox Added: {e.Device.Id}");
-        }
-
-
         /// <summary>
         /// Constructor. Creates a new instance of this object
         /// </summary>
         public WinchHuntConnector()
         {
-            DeviceManager.FoxAdded += DeviceManager_FoxAdded;
-            DeviceManager.FoxUpdated += DeviceManager_FoxUpdated;
-            DeviceManager.FoxRemoved += DeviceManager_FoxRemoved;
+            
         }
 
 

@@ -20,7 +20,8 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         /// <summary>
         /// Gets the device manager that holds access to all known devices
         /// </summary>
-        public DeviceManager DeviceManager { get; private set; } = new DeviceManager();
+        public DeviceManager DeviceManager { get; private set; } = new DeviceManager();        
+
 
         /// <summary>
         /// Connects to a WinchHunt device over the serial port

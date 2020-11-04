@@ -82,12 +82,12 @@ steps:
   displayName: 'Publish artifact WinchHuntCmd'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/WinchHuntCmd'
-    ArtifactName: 'TestApp'
+    ArtifactName: 'WinchHuntCmd'
     publishLocation: 'Container'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifact NuGet Package'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/NuGet'
-    ArtifactName: 'TestApp'
+    ArtifactName: 'Package'
     publishLocation: 'Container'

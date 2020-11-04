@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>0.9.1</Version>
+    <Version>0.9.2</Version>
     <Authors>Joost Haverkort</Authors>
     <Description>Utility library for connecting to a WinchHunt Hunter over Serial Port.</Description>
     <Copyright>(c) 2020: Joost Haverkort</Copyright>
-    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageLicenseFile></PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

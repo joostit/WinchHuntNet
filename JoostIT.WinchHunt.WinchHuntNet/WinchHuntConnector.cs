@@ -22,6 +22,11 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         /// </summary>
         public DeviceManager DeviceManager { get; private set; } = new DeviceManager();        
 
+        /// <summary>
+        /// Gets or sets whether there's a live connection to the WincHunt device
+        /// </summary>
+        public bool IsConnected { get; private set; }
+
 
         /// <summary>
         /// Connects to a WinchHunt device over the serial port
@@ -38,6 +43,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
                 serialConnection = new SerialPortConnector();
                 serialConnection.NewSerialPacket += SerialConnection_NewSerialPacket;
                 serialConnection.Connect(portName, BaudRate);
+                IsConnected = true;
             }
             catch(Exception e)
             {

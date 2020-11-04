@@ -5,4 +5,6 @@ using System.Text;
 
 [assembly: InternalsVisibleTo("JoostIT.WinchHunt.WinchHuntNet.UnitTests")]
 [assembly: InternalsVisibleTo("JoostIT.WinchHunt.WinchHuntNet.ComponentTests")]
+[assembly: InternalsVisibleTo("JoostIT.WinchHunt.WinchHuntNet.IntegrationTests")]
+
 

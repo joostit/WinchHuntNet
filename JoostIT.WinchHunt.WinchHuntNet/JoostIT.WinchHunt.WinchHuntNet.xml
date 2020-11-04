@@ -202,6 +202,11 @@
             Gets the device manager that holds access to all known devices
             </summary>
         </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.IsConnected">
+            <summary>
+            Gets or sets whether there's a live connection to the WincHunt device
+            </summary>
+        </member>
         <member name="M:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.Connect(System.String)">
             <summary>
             Connects to a WinchHunt device over the serial port

@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoostIT.WinchHunt.WinchHunt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoostIT.WinchHunt.WinchHuntNet.UnitTests", "JoostIT.WinchHunt.WinchHuntNet.UnitTests\JoostIT.WinchHunt.WinchHuntNet.UnitTests.csproj", "{B192D352-1CE2-4B04-A75A-9C285DC37CA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoostIT.WinchHunt.WinchHuntNet.IntegrationTests", "JoostIT.WinchHunt.WinchHuntNet.IntegrationTests\JoostIT.WinchHunt.WinchHuntNet.IntegrationTests.csproj", "{353E92C8-CE5B-4A97-83D8-9B1641797B1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{B192D352-1CE2-4B04-A75A-9C285DC37CA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B192D352-1CE2-4B04-A75A-9C285DC37CA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B192D352-1CE2-4B04-A75A-9C285DC37CA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{353E92C8-CE5B-4A97-83D8-9B1641797B1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{353E92C8-CE5B-4A97-83D8-9B1641797B1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{353E92C8-CE5B-4A97-83D8-9B1641797B1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{353E92C8-CE5B-4A97-83D8-9B1641797B1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{B9971FBE-06B3-403D-B460-4EA9C8E18C22} = {382CAF91-98F2-440C-8C02-052D7ADE0BC3}
 		{64D2FD9A-3764-497C-AF44-FFCED52559E3} = {FC5BD0CF-A444-4250-87C9-7551CEEF3680}
 		{B192D352-1CE2-4B04-A75A-9C285DC37CA8} = {FC5BD0CF-A444-4250-87C9-7551CEEF3680}
+		{353E92C8-CE5B-4A97-83D8-9B1641797B1F} = {FC5BD0CF-A444-4250-87C9-7551CEEF3680}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C17B565-AFFB-46DC-AD38-28D09F7CC948}

@@ -13,7 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
+  NUGET_PACKAGES: '$(Pipeline.Workspace)/.nuget/packages'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -21,8 +21,9 @@ steps:
 
 - task: Cache@2
   inputs:
-    key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/packages.lock.json'
+    key: 'nuget | "$(Agent.OS)" | $(Pipeline.Workspace)/.nuget/packages'
     path: '$(NUGET_PACKAGES)'
+    cacheHitVar: CACHE_RESTORED
     restoreKeys: |
        nuget | "$(Agent.OS)"
        nuget

@@ -93,13 +93,13 @@ namespace JoostIT.WinchHunt.WinchHuntNet.IntegrationTests.Features
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Winchunt is initially not connected")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Winchhunt is initially not connected")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "WinchuntConnector connections")]
-        public virtual void WinchuntIsInitiallyNotConnected()
+        public virtual void WinchhuntIsInitiallyNotConnected()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Winchunt is initially not connected", null, tagsOfScenario, argumentsOfScenario);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Winchhunt is initially not connected", null, tagsOfScenario, argumentsOfScenario);
 #line 7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

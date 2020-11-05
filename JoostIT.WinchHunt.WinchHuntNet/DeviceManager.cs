@@ -114,19 +114,19 @@ namespace JoostIT.WinchHunt.WinchHuntNet
 
         private void RaiseFoxAdded(DeviceInfo device)
         {
-            FoxAdded(this, new DeviceEventArgs(device));
+            FoxAdded?.Invoke(this, new DeviceEventArgs(device));
         }
 
 
         private void RaiseFoxUpdated(DeviceInfo device)
         {
-            FoxUpdated(this, new DeviceEventArgs(device));
+            FoxUpdated?.Invoke(this, new DeviceEventArgs(device));
         }
 
 
         private void RaiseFoxRemoved(DeviceInfo device)
         {
-            FoxRemoved(this, new DeviceEventArgs(device));
+            FoxRemoved?.Invoke(this, new DeviceEventArgs(device));
         }
 
 

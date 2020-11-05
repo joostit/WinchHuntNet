@@ -1,8 +1,8 @@
 ﻿using JoostIT.WinchHunt.WinchHuntNet.LoraMessaging;
 using JoostIT.WinchHunt.WinchHuntNet.SerialConnection;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace JoostIT.WinchHunt.WinchHuntNet
 {
@@ -85,7 +85,9 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         {
             LoraPacket loraPacket = lorapacketBuilder.CreatePacket(serialPacket.Data);
 
-            FoxMessage message = JsonSerializer.Deserialize<FoxMessage>(loraPacket.JsonData);
+            //FoxMessage message = JsonSerializer.Deserialize<FoxMessage>(loraPacket.JsonData);
+
+            FoxMessage message = JsonConvert.DeserializeObject<FoxMessage>(loraPacket.JsonData);
 
             DeviceManager.ProcessFoxMessage(message);
         }

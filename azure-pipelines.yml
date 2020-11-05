@@ -13,10 +13,20 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
 
 steps:
 - task: NuGetToolInstaller@1
   displayName: 'Install NuGet'
+
+- task: CacheBeta@1
+  inputs:
+    key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/packages.lock.json'
+    restoreKeys: |
+       nuget | "$(Agent.OS)"
+       nuget
+    path: $(NUGET_PACKAGES)
+  displayName: Cache NuGet packages
 
 - task: NuGetCommand@2
   displayName: 'Restore NuGet packages'

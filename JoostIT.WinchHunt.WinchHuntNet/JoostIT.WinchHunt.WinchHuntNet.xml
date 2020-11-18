@@ -105,7 +105,7 @@
             Gets the GPS HDOP value
             </summary>
         </member>
-        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.GpsInfo.hasFix">
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.GpsInfo.HasFix">
             <summary>
             Gets whether the GPS receiver has a valid fix
             </summary>

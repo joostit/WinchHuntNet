@@ -1,5 +1,8 @@
 ﻿using JoostIT.WinchHunt.WinchHuntNet;
+using JoostIT.WinchHunt.WinchHuntNet.Data;
 using System;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace JoostIT.WinchHunt.WinchHuntCmd
 {
@@ -18,9 +21,23 @@ namespace JoostIT.WinchHunt.WinchHuntCmd
 
                 connector.Connect("COM6");
 
+                WebRestClient restClient = new WebRestClient();
 
-                Console.ReadKey();
+                while (true)
+                {
+                    Thread.Sleep(3000);
+                    FoxPost post = new FoxPost();
+                    post.Devices = new List<WinchFox>(connector.DeviceManager.Foxes.Values);
+
+                    restClient.sendFoxes(post);
+                }
+
+
+
+                
             }
         }
+
+
     }
 }

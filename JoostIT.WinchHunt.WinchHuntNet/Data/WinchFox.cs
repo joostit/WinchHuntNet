@@ -36,7 +36,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.Data
         internal void UpdateGpsData(FoxMessage message)
         {
             Gps.Altitude = message.Gps.Altitude;
-            Gps.hasFix = message.Gps.hasFix;
+            Gps.HasFix = message.Gps.hasFix;
             Gps.Hdop = message.Gps.Hdop;
             Gps.Latitude = message.Gps.Latitude;
             Gps.Longitude = message.Gps.Longitude;

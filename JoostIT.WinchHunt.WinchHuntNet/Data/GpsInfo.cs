@@ -43,7 +43,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.Data
         /// <summary>
         /// Gets whether the GPS receiver has a valid fix
         /// </summary>
-        public bool hasFix { get; internal set; }
+        public bool HasFix { get; internal set; }
 
     }
 }

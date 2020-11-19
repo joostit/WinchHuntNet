@@ -15,14 +15,17 @@ namespace JoostIT.WinchHunt.WinchHuntNet.Data
         /// <summary>
         /// Gets Device information
         /// </summary>
-        public DeviceInfo Device { get; protected set; }
+        public DeviceInfo Device { get; set; }
 
         /// <summary>
         /// Gets the time stamp of the last update that was received from the device
         /// </summary>
-        public DateTime LastUpdate { get; private set; }
+        public DateTime LastUpdate { get; set; }
 
-        internal WinchHuntDevice()
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public WinchHuntDevice()
         {
 
         }

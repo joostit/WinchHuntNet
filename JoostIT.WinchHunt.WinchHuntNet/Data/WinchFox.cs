@@ -15,8 +15,14 @@ namespace JoostIT.WinchHunt.WinchHuntNet.Data
         /// <summary>
         /// Gets last known GPS state information
         /// </summary>
-        public GpsInfo Gps { get; private set; }
+        public GpsInfo Gps { get; set; } = new GpsInfo();
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public WinchFox()
+        {
+        }
 
         internal WinchFox(FoxMessage message)
         {

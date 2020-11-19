@@ -50,6 +50,11 @@
             The type of device
             </summary>
         </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceInfo.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
         <member name="T:JoostIT.WinchHunt.WinchHuntNet.Data.DeviceTypes">
             <summary>
             Defines different WinchHunt device types
@@ -120,6 +125,11 @@
             Gets last known GPS state information
             </summary>
         </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.Data.WinchFox.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
         <member name="T:JoostIT.WinchHunt.WinchHuntNet.Data.WinchHuntDevice">
             <summary>
             A base class that represents any WinchHunt device
@@ -133,6 +143,11 @@
         <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.WinchHuntDevice.LastUpdate">
             <summary>
             Gets the time stamp of the last update that was received from the device
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.Data.WinchHuntDevice.#ctor">
+            <summary>
+            Constructor
             </summary>
         </member>
         <member name="M:JoostIT.WinchHunt.WinchHuntNet.Data.WinchHuntDevice.SetLastUpdateNow">

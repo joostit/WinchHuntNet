@@ -115,21 +115,3 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/NuGet'
     ArtifactName: 'Package'
     publishLocation: 'Container'
-
-
-- task: CmdLine@2
-  displayName: 'Set Git Info'
-  inputs:
-    script: |
-      git config --global user.email "dev@joostit.com"
-      git config --global user.name "Joost Haverkort"
-
-- task: shellexec@0
-  displayName: 'Create tracking branches'
-  inputs:
-    code: 'git branch -r | grep -v ''\->'' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done'
-
-- task: shellexec@0
-  displayName: 'Push to GitHub'
-  inputs:
-    code: 'git push https://$(GitHubToken)@github.com/joostit/WinchHuntNet.git -u --all --force'

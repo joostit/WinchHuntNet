@@ -28,6 +28,10 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         /// </summary>
         public bool IsConnected { get; private set; }
 
+        /// <summary>
+        /// Gets raised after serial data has been received and processed internally
+        /// </summary>
+        public event DataRxEventHandler SerialDataRx;
 
         /// <summary>
         /// Connects to a WinchHunt device over the serial port
@@ -71,34 +75,40 @@ namespace JoostIT.WinchHunt.WinchHuntNet
             {
                 
                 case SerialPacketTypes.LoraRx:
-                    ProcessLoraPacketReceived(e.Packet);
+                    FoxMessage message = ProcessLoraPacketReceived(e.Packet);
+                    RaiseSerialDataReceived(e.Packet, message);
                     break;
                 case SerialPacketTypes.HeartBeat:
+                    // ToDo: Process heartbeat signals
+                    RaiseSerialDataReceived(e.Packet);
                     break;
                 case SerialPacketTypes.Invalid:
                 default:
                     throw new NotSupportedException($"Unsupported packet type: {e.Packet.PacketType}");
             }
+
+            
         }
 
 
-        private void ProcessLoraPacketReceived(SerialPacket serialPacket)
+        private FoxMessage ProcessLoraPacketReceived(SerialPacket serialPacket)
         {
             LoraPacket loraPacket;
+            FoxMessage message = null;
 
             try
             {
                 loraPacket = lorapacketBuilder.CreatePacket(serialPacket.Data);
 
-                //FoxMessage message = JsonSerializer.Deserialize<FoxMessage>(loraPacket.JsonData);
-
-                FoxMessage message = JsonConvert.DeserializeObject<FoxMessage>(loraPacket.JsonData);
+                message = JsonConvert.DeserializeObject<FoxMessage>(loraPacket.JsonData);
 
                 DeviceManager.ProcessFoxMessage(message);
             }catch(InvalidDataException e)
             {
                 Console.WriteLine($"InvalidDataException while processing package: \n{e.Message}");
             }
+
+            return message;
         }
 
 
@@ -137,6 +147,10 @@ namespace JoostIT.WinchHunt.WinchHuntNet
             
         }
 
+        private void RaiseSerialDataReceived(SerialPacket packet, FoxMessage message = null)
+        {
+            SerialDataRx?.Invoke(this, new DataRxEventArgs(packet, message));
+        }
 
         /// <summary>
         /// Finalizer

@@ -7,24 +7,40 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JoostIT.WinchHunt.WinchHuntCmd
+namespace JoostIT.WinchHunt.WhRestConnector
 {
     internal class WebRestClient
     {
 
-        private const string BaseUrl = "https://winchhunt.azurewebsites.net/api/foxes";
+
+        private readonly HttpClient client = new HttpClient();
+
+        //private const string BaseUrl = "https://winchhunt.azurewebsites.net/api/foxes";
         //private const string BaseUrl = "https://localhost:44362/api/foxes";
 
-        private static readonly HttpClient client = new HttpClient();
+        private string baseUrl = null;
+
+        public WebRestClient(AppConfiguration config)
+        {
+            if (config.ConnectToRest)
+            {
+                baseUrl = config.RestUrl;
+            }
+        }
 
 
         public void sendFoxes(FoxPost devices)
         {
 
+            if (String.IsNullOrEmpty(baseUrl))
+            {
+                throw new InvalidOperationException("Cannot send foxes when no Rest URL is configured");
+            }
+
             string content = JsonConvert.SerializeObject(devices);
             try
             {
-                var httpResponse = client.PostAsync(BaseUrl, new StringContent(content, Encoding.Default, "application/json")).Result;
+                var httpResponse = client.PostAsync(baseUrl, new StringContent(content, Encoding.Default, "application/json")).Result;
 
             }
             catch (AggregateException e)

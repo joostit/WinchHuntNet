@@ -185,6 +185,126 @@
             Gets raised when a fox is removed from the collection
             </summary>
         </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.FoxMessage">
+            <summary>
+            Defines a Fox Message as used by LoRa communication
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.FoxMessage.Device">
+            <summary>
+            Gets or sets the Device information
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.FoxMessage.Gps">
+            <summary>
+            Gets or sets GPS information
+            </summary>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraDeviceInfo">
+            <summary>
+            Defines Device information as used by LoRa communication
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraDeviceInfo.Name">
+            <summary>
+            Gets or sets the device name
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraDeviceInfo.Id">
+            <summary>
+            Gets or sets the device ID
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraDeviceInfo.Hardware">
+            <summary>
+            Gets or sets the device hardware ID
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraDeviceInfo.Version">
+            <summary>
+            Gets or sets the device version
+            </summary>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraGpsInfo">
+            <summary>
+            Defines a GPS Message as used by LoRa communication
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraGpsInfo.Latitude">
+            <summary>
+            Gets or sets Latitude
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraGpsInfo.Longitude">
+            <summary>
+            Gets or sets Longitude
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraGpsInfo.Satellites">
+            <summary>
+            Gets or sets the number of sattelites
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraGpsInfo.Speed">
+            <summary>
+            Gets or sets the speed
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraGpsInfo.Altitude">
+            <summary>
+            Gets or sets the altitude
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraGpsInfo.Hdop">
+            <summary>
+            Gets or sets the HDOP value
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraGpsInfo.hasFix">
+            <summary>
+            Gets or sets whether a fix has been obtained
+            </summary>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket">
+            <summary>
+            Represents a serial data packet
+            </summary>
+        </member>
+        <member name="F:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket.LengthFieldLength">
+            <summary>
+            Defines the length of the [Length] field
+            </summary>
+        </member>
+        <member name="F:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket.TypeFieldLength">
+            <summary>
+            Defines the length of the [Type] field
+            </summary>
+        </member>
+        <member name="F:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket.StartSequence">
+            <summary>
+            Defines the Start sequence
+            </summary>
+        </member>
+        <member name="F:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket.EndSequence">
+            <summary>
+            Defines the end sequence
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket.DataLength">
+            <summary>
+            Gets or sets the data length
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket.Data">
+            <summary>
+            Gets or sets the actual data part
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket.PacketType">
+            <summary>
+            Gets or sets the packet type
+            </summary>
+        </member>
         <member name="M:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacketBuilder.ProcessSerialData(System.String)">
             <summary>
             Processes new Serial data to find packets. New packets will be raised via the PacketReceived event
@@ -194,6 +314,26 @@
         <member name="M:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacketBuilder.Reset">
             <summary>
             Resets the builder by resetting the internal state machine to Idle
+            </summary>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacketTypes">
+            <summary>
+            Defines different serial packet types
+            </summary>
+        </member>
+        <member name="F:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacketTypes.Invalid">
+            <summary>
+            An invalid or undefined packet type
+            </summary>
+        </member>
+        <member name="F:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacketTypes.LoraRx">
+            <summary>
+            A Lora packet that was received
+            </summary>
+        </member>
+        <member name="F:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacketTypes.HeartBeat">
+            <summary>
+            A heartbeat signal
             </summary>
         </member>
         <member name="M:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPortConnector.Dispose">
@@ -206,6 +346,33 @@
             Disposes all resources
             </summary>
             <param name="disposing">True if called from Dispose(). False when called from the finalizer</param>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.DataRxEventHandler">
+            <summary>
+            Defines the Event Handler for the SerialDataReceived event
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.DataRxEventArgs">
+            <summary>
+            Event Arguments for receiving serial data
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.DataRxEventArgs.Packet">
+            <summary>
+            Gets the packet that was received
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.DataRxEventArgs.Message">
+            <summary>
+            If The packet type was a lora message, this property gets that message
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.DataRxEventArgs.#ctor(JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket,JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.FoxMessage)">
+            <summary>
+            Constructor
+            </summary>
         </member>
         <member name="T:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector">
             <summary>
@@ -220,6 +387,11 @@
         <member name="P:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.IsConnected">
             <summary>
             Gets or sets whether there's a live connection to the WincHunt device
+            </summary>
+        </member>
+        <member name="E:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.SerialDataRx">
+            <summary>
+            Gets raised after serial data has been received and processed internally
             </summary>
         </member>
         <member name="M:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector.Connect(System.String)">

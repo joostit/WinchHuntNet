@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "JoostIT.WinchHunt.WhRestConnector": {
+      "commandName": "Project",
+      "commandLineArgs": "COM6 \"https://winchhunt.azurewebsites.net/api/foxes\""
+    }
+  }
+}

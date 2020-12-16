@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JoostIT.WinchHunt.WinchHuntCmd
+namespace JoostIT.WinchHunt.WhRestConnector
 {
     public class FoxPost
     {

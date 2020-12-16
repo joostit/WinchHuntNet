@@ -60,6 +60,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
                 if (config.ConnectToRest)
                 {
                     FoxPost post = new FoxPost();
+                    post.AccessToken = config.ApiAccessToken;
                     post.Devices = new List<WinchFox>(connector.DeviceManager.Foxes.Values);
 
                     restClient.sendFoxes(post);

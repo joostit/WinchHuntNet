@@ -18,21 +18,18 @@ namespace JoostIT.WinchHunt.WhRestConnector
         //private const string BaseUrl = "https://winchhunt.azurewebsites.net/api/foxes";
         //private const string BaseUrl = "https://localhost:44362/api/foxes";
 
-        private string baseUrl = null;
+        private AppConfiguration configuration;
 
         public WebRestClient(AppConfiguration config)
         {
-            if (config.ConnectToRest)
-            {
-                baseUrl = config.RestUrl;
-            }
+            configuration = config;
         }
 
 
         public void sendFoxes(FoxPost devices)
         {
 
-            if (String.IsNullOrEmpty(baseUrl))
+            if (String.IsNullOrEmpty(configuration.RestUrl))
             {
                 throw new InvalidOperationException("Cannot send foxes when no Rest URL is configured");
             }
@@ -40,7 +37,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
             string content = JsonConvert.SerializeObject(devices);
             try
             {
-                var httpResponse = client.PostAsync(baseUrl, new StringContent(content, Encoding.Default, "application/json")).Result;
+                var httpResponse = client.PostAsync(configuration.RestUrl, new StringContent(content, Encoding.Default, "application/json")).Result;
 
             }
             catch (AggregateException e)

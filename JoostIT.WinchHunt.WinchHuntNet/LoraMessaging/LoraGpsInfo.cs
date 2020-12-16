@@ -7,25 +7,25 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
 {
     internal class LoraGpsInfo
     {
-        [JsonProperty("lat")]
+        [JsonProperty("la")]
         public double Latitude { get; set; }
 
-        [JsonProperty("lon")]
+        [JsonProperty("lo")]
         public double Longitude { get; set; }
 
-        [JsonProperty("sats")]
+        [JsonProperty("s")]
         public int Satellites { get; set; }
 
-        [JsonProperty("spd")]
+        [JsonProperty("v")]
         public double Speed { get; set; }
 
-        [JsonProperty("alt")]
+        [JsonProperty("a")]
         public double Altitude { get; set; }
 
-        [JsonProperty("hdop")]
+        [JsonProperty("h")]
         public double Hdop { get; set; }
 
-        [JsonProperty("fix")]
+        [JsonProperty("f")]
         public bool hasFix { get; set; }
 
     }

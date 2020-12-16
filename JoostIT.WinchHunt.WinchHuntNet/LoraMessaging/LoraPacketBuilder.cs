@@ -19,7 +19,14 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
             if (data.Length < 19) { throw new InvalidDataException($"Minimum data length is 19 characters. Got {data.Length} characters instead."); }
 
             string crcValueString = data.Substring(data.Length - 2, 2);
-            retVal.Crc = Convert.ToByte(crcValueString, HexBase);
+
+            try
+            {
+                retVal.Crc = Convert.ToByte(crcValueString, HexBase);
+            } catch (FormatException)
+            {
+                throw new InvalidDataException("Could not read CRC bytes. Possibly caused by a malformed message");
+            }
 
             string CrcDataString = data.Substring(0, data.Length - 2);
             byte calculatedCrc = Crc8.CalculateCrc(CrcDataString);

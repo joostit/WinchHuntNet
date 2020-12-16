@@ -30,7 +30,7 @@ namespace JoostIT.WinchHunt.WinchHuntCmd
                     FoxPost post = new FoxPost();
                     post.Devices = new List<WinchFox>(connector.DeviceManager.Foxes.Values);
 
-                    AddDebugFoxes(post.Devices);
+                    //AddDebugFoxes(post.Devices);
 
                     restClient.sendFoxes(post);
                 }

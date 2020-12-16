@@ -13,6 +13,7 @@ namespace JoostIT.WinchHunt.WinchHuntCmd
     {
 
         private const string BaseUrl = "https://winchhunt.azurewebsites.net/api/foxes";
+        //private const string BaseUrl = "https://localhost:44362/api/foxes";
 
         private static readonly HttpClient client = new HttpClient();
 

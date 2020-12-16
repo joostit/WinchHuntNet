@@ -3,6 +3,7 @@ using JoostIT.WinchHunt.WinchHuntNet.SerialConnection;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace JoostIT.WinchHunt.WinchHuntNet
 {
@@ -83,13 +84,21 @@ namespace JoostIT.WinchHunt.WinchHuntNet
 
         private void ProcessLoraPacketReceived(SerialPacket serialPacket)
         {
-            LoraPacket loraPacket = lorapacketBuilder.CreatePacket(serialPacket.Data);
+            LoraPacket loraPacket;
 
-            //FoxMessage message = JsonSerializer.Deserialize<FoxMessage>(loraPacket.JsonData);
+            try
+            {
+                loraPacket = lorapacketBuilder.CreatePacket(serialPacket.Data);
 
-            FoxMessage message = JsonConvert.DeserializeObject<FoxMessage>(loraPacket.JsonData);
+                //FoxMessage message = JsonSerializer.Deserialize<FoxMessage>(loraPacket.JsonData);
 
-            DeviceManager.ProcessFoxMessage(message);
+                FoxMessage message = JsonConvert.DeserializeObject<FoxMessage>(loraPacket.JsonData);
+
+                DeviceManager.ProcessFoxMessage(message);
+            }catch(InvalidDataException e)
+            {
+                Console.WriteLine($"InvalidDataException while processing package: \n{e.Message}");
+            }
         }
 
 

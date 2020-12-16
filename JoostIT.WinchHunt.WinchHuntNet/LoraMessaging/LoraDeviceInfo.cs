@@ -8,10 +8,10 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
     internal class LoraDeviceInfo
     {
 
-        [JsonProperty("name")]
+        [JsonProperty("n")]
         public string Name { get; set; }
 
-        [JsonProperty("id")]
+        [JsonProperty("i")]
         public string Id { get; set; }
 
         [JsonProperty("hw")]

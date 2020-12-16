@@ -8,10 +8,10 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
 {
     internal class FoxMessage
     {
-        [JsonProperty("dev")]
+        [JsonProperty("d")]
         public LoraDeviceInfo Device { get; set; }
 
-        [JsonProperty("gps")]
+        [JsonProperty("g")]
         public LoraGpsInfo Gps { get; set; }
     }
 }

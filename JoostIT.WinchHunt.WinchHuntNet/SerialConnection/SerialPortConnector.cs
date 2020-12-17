@@ -12,10 +12,29 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
         private bool isDisposed = false;
         private SerialPort port;
 
+        private bool portStaysOpen = true;
+
         private SerialPacketBuilder packetBuilder = new SerialPacketBuilder();
 
         public event EventHandler<NewSerialPacketEventArgs> NewSerialPacket;
 
+        public event EventHandler PortClosedOnError;
+
+
+        public bool IsOpen
+        {
+            get
+            {
+                if(port != null)
+                {
+                    return port.IsOpen;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
         internal static List<string> GetAvailablePorts()
         {
@@ -31,7 +50,9 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
 
             if (!IsValidPort(portName))
             {
-                throw new InvalidOperationException($"Serial port '{portName}' does not exist.");
+                Console.WriteLine($"Serial port '{portName}' does not exist.");
+                ClosePort();
+                return;
             }
 
             port = new SerialPort(portName, baudrate, Parity.None, 8);
@@ -43,9 +64,41 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
                 // Clear the exsisting data before attaching the listener
                 port.ReadExisting();
                 port.DataReceived += Port_DataReceived;
+                port.ErrorReceived += Port_ErrorReceived;
+                RunWatchdog();
             }
         }
 
+
+        private void RunWatchdog()
+        {
+            ThreadPool.QueueUserWorkItem((s) =>
+            {
+
+                while (portStaysOpen)
+                {
+                    Thread.Sleep(1000);
+
+                    if (!port.IsOpen)
+                    {
+                        ClosePort();
+                    }
+                }
+            });
+        }
+
+
+        private void Port_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+        {
+            ClosePort();
+        }
+
+
+        private void ClosePort()
+        {
+            portStaysOpen = false;
+            RaisePortClosedOnError();
+        }
 
         private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -87,6 +140,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
                 if(port!= null)
                 {
                     port.Dispose();
+                    port = null;
                 }
             }
             isDisposed = true;
@@ -100,5 +154,11 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
 
 
         ~SerialPortConnector() => Dispose(false);
+
+
+        private void RaisePortClosedOnError()
+        {
+            PortClosedOnError?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

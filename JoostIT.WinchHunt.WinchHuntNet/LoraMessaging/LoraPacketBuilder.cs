@@ -11,34 +11,52 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
         private const int HexBase = 16;
 
 
-        internal LoraPacket CreatePacket(String data)
+        internal PacketParseResult<LoraPacket> CreatePacket(String data)
         {
-            LoraPacket retVal = new LoraPacket();
+
+            PacketParseResult<LoraPacket> retVal;
+            LoraPacket packet = new LoraPacket();
 
             if (data == null) { throw new ArgumentNullException("data"); }
-            if (data.Length < 19) { throw new InvalidDataException($"Minimum data length is 19 characters. Got {data.Length} characters instead."); }
-
-            string crcValueString = data.Substring(data.Length - 2, 2);
 
             try
             {
-                retVal.Crc = Convert.ToByte(crcValueString, HexBase);
-            } catch (FormatException)
-            {
-                throw new InvalidDataException("Could not read CRC bytes. Possibly caused by a malformed message");
+                if (data.Length < 19) { throw new InvalidDataException($"Minimum data length is 19 characters. Got {data.Length} characters instead."); }
+
+                string crcValueString = data.Substring(data.Length - 2, 2);
+
+                try
+                {
+                    packet.Crc = Convert.ToByte(crcValueString, HexBase);
+                }
+                catch (FormatException)
+                {
+                    throw new InvalidDataException("Could not read CRC bytes. Possibly caused by a malformed message");
+                }
+
+                string CrcDataString = data.Substring(0, data.Length - 2);
+                byte calculatedCrc = Crc8.CalculateCrc(CrcDataString);
+
+                if (packet.Crc != calculatedCrc)
+                {
+                    throw new InvalidDataException("CRC Mismatch");
+                }
+
+                packet.SenderId = Convert.ToUInt32(data.Substring(7, 6), HexBase);
+                packet.MessageId = Convert.ToUInt16(data.Substring(13, 4), HexBase);
+                packet.JsonData = data.Substring(17, data.Length - 17 - 2);
+
+                retVal = new PacketParseResult<LoraPacket>(packet);
             }
-
-            string CrcDataString = data.Substring(0, data.Length - 2);
-            byte calculatedCrc = Crc8.CalculateCrc(CrcDataString);
-
-            if (retVal.Crc != calculatedCrc)
+            catch (InvalidDataException e)
             {
-                throw new InvalidDataException("CRC Mismatch");
+                retVal = new PacketParseResult<LoraPacket>(e);
             }
-
-            retVal.SenderId = Convert.ToUInt32(data.Substring(7, 6), HexBase);
-            retVal.MessageId = Convert.ToUInt16(data.Substring(13, 4), HexBase);
-            retVal.JsonData = data.Substring(17, data.Length - 17 - 2);
+            catch (FormatException e)
+            {
+                retVal = new PacketParseResult<LoraPacket>(e);
+            }
+            
 
             return retVal;
 

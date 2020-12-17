@@ -52,7 +52,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.UnitTests
         {
             LoraPacketBuilder builder = new LoraPacketBuilder();
 
-            LoraPacket result = builder.CreatePacket(ValidPacketString);
+            LoraPacket result = builder.CreatePacket(ValidPacketString).Result;
 
             Assert.AreEqual(SenderId, result.SenderId);
             Assert.AreEqual(MessageId, result.MessageId);

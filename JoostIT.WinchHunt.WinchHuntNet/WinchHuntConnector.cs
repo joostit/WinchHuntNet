@@ -47,8 +47,9 @@ namespace JoostIT.WinchHunt.WinchHuntNet
             {
                 serialConnection = new SerialPortConnector();
                 serialConnection.NewSerialPacket += SerialConnection_NewSerialPacket;
+                serialConnection.PortClosedOnError += SerialConnection_PortClosedOnError;
                 serialConnection.Connect(portName, BaudRate);
-                IsConnected = true;
+                IsConnected = serialConnection.IsOpen;
             }
             catch(Exception e)
             {
@@ -56,6 +57,14 @@ namespace JoostIT.WinchHunt.WinchHuntNet
                 serialConnection = null;
                 throw e;
             }
+        }
+
+
+        private void SerialConnection_PortClosedOnError(object sender, EventArgs e)
+        {
+            Console.WriteLine("Serial port closed unexpectedly.");
+
+            
         }
 
 
@@ -75,8 +84,8 @@ namespace JoostIT.WinchHunt.WinchHuntNet
             {
                 
                 case SerialPacketTypes.LoraRx:
-                    FoxMessage message = ProcessLoraPacketReceived(e.Packet);
-                    RaiseSerialDataReceived(e.Packet, message);
+                    PacketParseResult<FoxMessage> parseResult = ProcessLoraPacketReceived(e.Packet);
+                    RaiseSerialDataReceived(e.Packet, parseResult);
                     break;
                 case SerialPacketTypes.HeartBeat:
                     // ToDo: Process heartbeat signals
@@ -86,29 +95,37 @@ namespace JoostIT.WinchHunt.WinchHuntNet
                 default:
                     throw new NotSupportedException($"Unsupported packet type: {e.Packet.PacketType}");
             }
-
             
         }
 
 
-        private FoxMessage ProcessLoraPacketReceived(SerialPacket serialPacket)
+        private PacketParseResult<FoxMessage> ProcessLoraPacketReceived(SerialPacket serialPacket)
         {
-            LoraPacket loraPacket;
-            FoxMessage message = null;
+            PacketParseResult<LoraPacket> parsedLoraPacket;
+            PacketParseResult<FoxMessage> parsedFoxMessage;
 
-            try
+            parsedLoraPacket = lorapacketBuilder.CreatePacket(serialPacket.Data);
+
+            if (parsedLoraPacket.IsValid)
             {
-                loraPacket = lorapacketBuilder.CreatePacket(serialPacket.Data);
-
-                message = JsonConvert.DeserializeObject<FoxMessage>(loraPacket.JsonData);
-
-                DeviceManager.ProcessFoxMessage(message);
-            }catch(InvalidDataException e)
+                
+                try
+                {
+                    FoxMessage message = JsonConvert.DeserializeObject<FoxMessage>(parsedLoraPacket.Result.JsonData);
+                    DeviceManager.ProcessFoxMessage(message);
+                    parsedFoxMessage = new PacketParseResult<FoxMessage>(message);
+                }
+                catch(JsonException e)
+                {
+                    parsedFoxMessage = new PacketParseResult<FoxMessage>(e);
+                }
+            }
+            else
             {
-                Console.WriteLine($"InvalidDataException while processing package: \n{e.Message}");
+                parsedFoxMessage = new PacketParseResult<FoxMessage>($"Exception while processing LoraPacket: \n{ parsedLoraPacket.ErrorMessage}");
             }
 
-            return message;
+            return parsedFoxMessage;
         }
 
 
@@ -147,7 +164,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
             
         }
 
-        private void RaiseSerialDataReceived(SerialPacket packet, FoxMessage message = null)
+        private void RaiseSerialDataReceived(SerialPacket packet, ParseResult message = null)
         {
             SerialDataRx?.Invoke(this, new DataRxEventArgs(packet, message));
         }

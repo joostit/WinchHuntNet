@@ -20,23 +20,23 @@ namespace JoostIT.WinchHunt.WinchHuntNet
     public class DataRxEventArgs : EventArgs
     {
         /// <summary>
-        /// Gets the packet that was received
+        /// Gets the serial packet that was received
         /// </summary>
         public SerialPacket Packet { get; private set; }
 
         /// <summary>
-        /// If The packet type was a lora message, this property gets that message
+        /// The ParseResult of this RX operation, if one was created
         /// </summary>
-        public FoxMessage Message { get; private set; }
+        public ParseResult ResultPackage { get; private set; }
 
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public DataRxEventArgs(SerialPacket packet, FoxMessage message)
+        public DataRxEventArgs(SerialPacket packet, ParseResult resultPackage)
         {
             this.Packet = packet;
-            this.Message = message;
+            this.ResultPackage = resultPackage;
         }
 
 

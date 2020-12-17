@@ -200,6 +200,12 @@
             Gets or sets GPS information
             </summary>
         </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.FoxMessage.ToString">
+            <summary>
+            Returns a string representation of the state of this object
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraDeviceInfo">
             <summary>
             Defines Device information as used by LoRa communication
@@ -264,6 +270,89 @@
             <summary>
             Gets or sets whether a fix has been obtained
             </summary>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.PacketParseResult`1">
+            <summary>
+            Holds the result of a packet parsing operation
+            </summary>
+            typeparam name="TPacket">The result packet type
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.PacketParseResult`1.Result">
+            <summary>
+            The result package. Null if the parsing was unsuccessful
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.PacketParseResult`1.#ctor(`0)">
+            <summary>
+            Constructor. Creates a valid PacketParseResult with the provided package
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.PacketParseResult`1.#ctor(System.Exception)">
+            <summary>
+            Constructor. Creates an invalid PacketParseResult with the provided exception
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.PacketParseResult`1.#ctor(System.String)">
+            <summary>
+            Constructor. Creates an invalid PacketParseResult with the provided error message
+            </summary>
+            <param name="errorMessage"></param>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.PacketParseResult`1.ToString">
+            <summary>
+            Returns a String representation of the state of this object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.ParseResult">
+            <summary>
+            Non-generic base class for a packet parse result
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.ParseResult.IsValid">
+            <summary>
+            Returns true if this object holds a valid result object. Otherwise false
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.ParseResult.ParseException">
+            <summary>
+            Gets the Exception that occured during parsing, if available. Otherwise null.
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.ParseResult.HasException">
+            <summary>
+            Returns true if this object has a ParseException associtated with it. 
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.ParseResult.ErrorMessage">
+            <summary>
+            Gets the error message that resulted from the parsing operation, if available.
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.ParseResult.#ctor">
+            <summary>
+            Constructor. Creates a valid Parse result
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.ParseResult.#ctor(System.Exception)">
+            <summary>
+            Constructor. Creates an invalid ParseResult with the provided exception
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.ParseResult.#ctor(System.String)">
+            <summary>
+            Constructor. Creates an invalid ParseResult with the provided error message
+            </summary>
+            <param name="errorMessage"></param>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.ParseResult.ToString">
+            <summary>
+            Returns a string representation of the current state of this object
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket">
             <summary>
@@ -361,15 +450,15 @@
         </member>
         <member name="P:JoostIT.WinchHunt.WinchHuntNet.DataRxEventArgs.Packet">
             <summary>
-            Gets the packet that was received
+            Gets the serial packet that was received
             </summary>
         </member>
-        <member name="P:JoostIT.WinchHunt.WinchHuntNet.DataRxEventArgs.Message">
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.DataRxEventArgs.ResultPackage">
             <summary>
-            If The packet type was a lora message, this property gets that message
+            The ParseResult of this RX operation, if one was created
             </summary>
         </member>
-        <member name="M:JoostIT.WinchHunt.WinchHuntNet.DataRxEventArgs.#ctor(JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket,JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.FoxMessage)">
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.DataRxEventArgs.#ctor(JoostIT.WinchHunt.WinchHuntNet.SerialConnection.SerialPacket,JoostIT.WinchHunt.WinchHuntNet.ParseResult)">
             <summary>
             Constructor
             </summary>

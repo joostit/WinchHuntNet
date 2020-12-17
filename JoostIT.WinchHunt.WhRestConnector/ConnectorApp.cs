@@ -79,7 +79,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
                     break;
 
                 case WinchHuntNet.SerialConnection.SerialPacketTypes.LoraRx:
-                    Console.WriteLine($"Serial RX: LoRaPacket from {e.Message.Device.Id} ({e.Message.Device.Name})");
+                    Console.WriteLine($"Serial RX: {e.ResultPackage.ToString()}");
                     break;
 
                 case WinchHuntNet.SerialConnection.SerialPacketTypes.HeartBeat:

@@ -24,5 +24,22 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
         /// </summary>
         [JsonProperty("g")]
         public LoraGpsInfo Gps { get; set; }
+
+
+        /// <summary>
+        /// Returns a string representation of the state of this object
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if (Device != null && Gps != null)
+            {
+                return $"FoxMessage from {Device.Id} ({Device.Name}). Gps Fix: {Gps.hasFix}";
+            }
+            else
+            {
+                return base.ToString();
+            }
+        }
     }
 }

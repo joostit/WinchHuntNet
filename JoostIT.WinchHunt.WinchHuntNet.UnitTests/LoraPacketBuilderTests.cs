@@ -37,13 +37,18 @@ namespace JoostIT.WinchHunt.WinchHuntNet.UnitTests
 
 
         [TestMethod]
-        public void InputTooShortThrowsInvalidData()
+        public void InputTooShortGivesErrorResult()
         {
             LoraPacketBuilder builder = new LoraPacketBuilder();
 
-            Assert.ThrowsException<InvalidDataException>(() => builder.CreatePacket(""));                       // 0
-            Assert.ThrowsException<InvalidDataException>(() => builder.CreatePacket("1"));                      // 1
-            Assert.ThrowsException<InvalidDataException>(() => builder.CreatePacket("123456789012345678"));     // 18
+            PacketParseResult<LoraPacket> result1 = builder.CreatePacket("");
+            PacketParseResult<LoraPacket> result2 = builder.CreatePacket("1");
+            PacketParseResult<LoraPacket> result3 = builder.CreatePacket("123456789012345678");
+
+            Assert.IsFalse(result1.IsValid);
+            Assert.IsFalse(result2.IsValid);
+            Assert.IsFalse(result3.IsValid);
+
         }
 
 

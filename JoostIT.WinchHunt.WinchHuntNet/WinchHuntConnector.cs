@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace JoostIT.WinchHunt.WinchHuntNet
 {
@@ -13,10 +14,14 @@ namespace JoostIT.WinchHunt.WinchHuntNet
     /// </summary>
     public class WinchHuntConnector : IDisposable
     {
+        private string portName = "";
         private bool isDisposed = false;
         private const int BaudRate = 115200;
         private SerialPortConnector serialConnection;
         private LoraPacketBuilder lorapacketBuilder = new LoraPacketBuilder();
+
+        private bool tryReconnect = true;
+        private int autoReconnectTimeout = 5000;
 
         /// <summary>
         /// Gets the device manager that holds access to all known devices
@@ -41,7 +46,9 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         {
 
             if (isDisposed) { throw new ObjectDisposedException("WinchHuntConnector"); }
-            if (serialConnection != null) { throw new InvalidOperationException("Cannot connect while there's already a connection."); }
+            if (serialConnection != null) { throw new InvalidOperationException($"Cannot open {portName} while there's already an existing SerialConnection object."); }
+
+            this.portName = portName;
 
             try
             {
@@ -50,6 +57,17 @@ namespace JoostIT.WinchHunt.WinchHuntNet
                 serialConnection.PortClosedOnError += SerialConnection_PortClosedOnError;
                 serialConnection.Connect(portName, BaudRate);
                 IsConnected = serialConnection.IsOpen;
+
+                if (IsConnected)
+                {
+                    Console.WriteLine($"{portName} opened sucessfully");
+                }
+                else
+                {
+                    serialConnection.Dispose();
+                    serialConnection = null;
+                    WaitAndReconnect();
+                }
             }
             catch(Exception e)
             {
@@ -62,9 +80,32 @@ namespace JoostIT.WinchHunt.WinchHuntNet
 
         private void SerialConnection_PortClosedOnError(object sender, EventArgs e)
         {
-            Console.WriteLine("Serial port closed unexpectedly.");
+            IsConnected = false;
 
-            
+            if (serialConnection != null)
+            {
+                serialConnection.Dispose();
+                serialConnection = null;
+            }
+
+            WaitAndReconnect();
+        }
+
+
+        private void WaitAndReconnect()
+        {
+            if (tryReconnect)
+            {
+
+                Console.WriteLine($"Trying to reopen in {autoReconnectTimeout / 1000} s");
+                Thread.Sleep(autoReconnectTimeout);
+
+                // Be sure that the value hasn't changed while we were waiting
+                if (tryReconnect)
+                {
+                    Connect(portName);
+                }
+            }
         }
 
 
@@ -145,6 +186,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         /// <param name="disposing">True if called from Dispose(). False when called from the finalizer</param>
         virtual protected void Dispose(bool disposing)
         {
+            tryReconnect = false;
             if (disposing)
             {
                 if (serialConnection != null)

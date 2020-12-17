@@ -51,7 +51,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
             if (!IsValidPort(portName))
             {
                 Console.WriteLine($"Serial port '{portName}' does not exist.");
-                ClosePort();
+                portStaysOpen = false;
                 return;
             }
 
@@ -81,6 +81,8 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
 
                     if (!port.IsOpen)
                     {
+                        portStaysOpen = false;
+                        Console.WriteLine("Serial port closed unexpectedly");
                         ClosePort();
                     }
                 }
@@ -90,6 +92,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
 
         private void Port_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
         {
+            Console.WriteLine("Serial port error received.");
             ClosePort();
         }
 

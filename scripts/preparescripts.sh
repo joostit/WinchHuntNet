@@ -8,4 +8,4 @@ chmod +x $parent_path/start.sh
 chmod +x $parent_path/stop.sh
 chmod +x $parent_path/restart.sh
 chmod +x $parent_path/showlog.sh
-chmod +x $parent_path/update.sh
+

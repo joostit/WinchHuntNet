@@ -14,7 +14,7 @@ sleep 3
 
 echo "   Copying files to /srv/winchuntnet..."
 mkdir -p /srv/winchuntnet
-$DOTNET_ROOT/dotnet publish $parent_path/../JoostIT.WinchHunt.WhRestConnector/JoostIT.WinchHunt.WhRestConnector.csproj -c Release -o /srv/winchhuntnet/
+dotnet publish $parent_path/../JoostIT.WinchHunt.WhRestConnector/JoostIT.WinchHunt.WhRestConnector.csproj -c Release -o /srv/winchhuntnet/
 
 
 echo "   Creating systemd service unit..."

@@ -7,7 +7,7 @@ After=multi-user.target
 Type=simple
 WorkingDirectory=/srv/winchhuntnet/
 # systemd will run this executable to start the service
-ExecStart=/srv/winchhuntnet/whrestconn
+ExecStart=/srv/winchhuntnet/whrestconn -f /etc/winchuntnet.conf
 # to query logs using journalctl, set a logical name here
 SyslogIdentifier=WinchHuntRestConn
 

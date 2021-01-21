@@ -57,7 +57,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         {
             if (IsValid && (Result != null))
             {
-                return $"Valid parse result: {Result.ToString()}";
+                return Result.ToString();
             }
             else
             {

@@ -60,7 +60,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
 
                 if (IsConnected)
                 {
-                    Console.WriteLine($"{portName} opened sucessfully");
+                    //Console.WriteLine($"{portName} opened sucessfully");
                 }
                 else
                 {
@@ -97,7 +97,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
             if (tryReconnect)
             {
 
-                Console.WriteLine($"Trying to reopen in {autoReconnectTimeout / 1000} s");
+                //Console.WriteLine($"Trying to reopen in {autoReconnectTimeout / 1000} s");
                 Thread.Sleep(autoReconnectTimeout);
 
                 // Be sure that the value hasn't changed while we were waiting

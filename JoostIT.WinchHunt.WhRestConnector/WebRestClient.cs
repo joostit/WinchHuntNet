@@ -1,4 +1,5 @@
-﻿using JoostIT.WinchHunt.WinchHuntNet.Data;
+﻿using JoostIt.WinchHunt.WhRestConnector;
+using JoostIT.WinchHunt.WinchHuntNet.Data;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
             }
             catch (AggregateException e)
             {
-                Console.WriteLine("Error while sending Fox Update to web server: " + e.Flatten().Message);
+                Logger.Log("Error while sending Fox Update to web server: " + e.Flatten().Message);
             }
 
             //var createdTask = JsonConvert.DeserializeObject<Todo>(await httpResponse.Content.ReadAsStringAsync());

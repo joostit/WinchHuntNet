@@ -1,4 +1,5 @@
-﻿using JoostIT.WinchHunt.WhRestConnector;
+﻿using JoostIt.WinchHunt.WhRestConnector;
+using JoostIT.WinchHunt.WhRestConnector;
 using JoostIT.WinchHunt.WinchHuntNet;
 using JoostIT.WinchHunt.WinchHuntNet.Data;
 using System;
@@ -27,16 +28,18 @@ namespace JoostIT.WinchHunt.WhRestConnector
                 }
                 catch (InvalidDataException e)
                 {
-                    Console.WriteLine(e.Message);
+                    Logger.Log(e.Message);
                     return -1;
                 }
 
-                Console.WriteLine("WinchHunt REST Connector");
+                Logger.Log("WinchHunt REST Connector");
+                Logger.Log("(c) 2020-2021 Joost Haverkort");
+                Logger.Log();
                 var ports = connector.GetAvailablePorts();
-                Console.WriteLine("Available serial ports:");
-                ports.ForEach((i) => Console.WriteLine("  " + i));
-                Console.WriteLine();
-                Console.WriteLine("Connecting to " + config.ComPort);
+                Logger.Log("Available serial ports:");
+                ports.ForEach((i) => Logger.Log("  " + i));
+                Logger.Log();
+                Logger.Log("Connecting to " + config.ComPort);
 
 
                 connector.SerialDataRx += Connector_SerialDataRx;
@@ -75,19 +78,19 @@ namespace JoostIT.WinchHunt.WhRestConnector
             switch (e.Packet.PacketType)
             {
                 case WinchHuntNet.SerialConnection.SerialPacketTypes.Invalid:
-                    Console.WriteLine("Serial RX: Invalid packet type");
+                    Logger.Log("RX: Invalid packet type");
                     break;
 
                 case WinchHuntNet.SerialConnection.SerialPacketTypes.LoraRx:
-                    Console.WriteLine($"Serial RX: {e.ResultPackage.ToString()}");
+                    Logger.Log($"RX: {e.ResultPackage.ToString()}");
                     break;
 
                 case WinchHuntNet.SerialConnection.SerialPacketTypes.HeartBeat:
-                    Console.WriteLine("Serial RX: Heartbeat");
+                    Logger.Log("RX: Heartbeat");
                     break;
 
                 default:
-                    Console.WriteLine($"Serial RX: Unsupported packet type: {e.Packet.PacketType}");
+                    Logger.Log($"RX: Unsupported packet type: {e.Packet.PacketType}");
                     break;
             }
         }

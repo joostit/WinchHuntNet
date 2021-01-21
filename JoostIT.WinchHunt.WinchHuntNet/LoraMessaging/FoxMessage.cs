@@ -34,7 +34,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
         {
             if (Device != null && Gps != null)
             {
-                return $"FoxMessage from {Device.Id} ({Device.Name}). Gps Fix: {Gps.hasFix}";
+                return $"Fox {Device.Id} ({Device.Name}). Gps Fix: {Gps.hasFix} - Sats: {Gps.Satellites} - Speed: {Gps.Speed} - ({Gps.Latitude}, {Gps.Longitude})";
             }
             else
             {

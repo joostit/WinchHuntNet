@@ -4,7 +4,12 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>JoostIt.WinchHunt.WhRestConnector</RootNamespace>
+    <AssemblyName>whrestconn</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IniFileParserStandard" Version="1.0.1" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\JoostIT.WinchHunt.WinchHuntNet\JoostIT.WinchHunt.WinchHuntNet.csproj" />

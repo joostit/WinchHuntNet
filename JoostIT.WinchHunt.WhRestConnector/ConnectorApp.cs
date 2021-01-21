@@ -20,11 +20,14 @@ namespace JoostIT.WinchHunt.WhRestConnector
             using (WinchHuntConnector connector = new WinchHuntConnector())
             {
 
+
                 AppConfiguration config;
 
                 try
                 {
-                    config = new AppConfiguration(args);
+                    AppConfigurationLoader loader = new AppConfigurationLoader();
+
+                    config = loader.LoadConfiguration(args);
                 }
                 catch (InvalidDataException e)
                 {

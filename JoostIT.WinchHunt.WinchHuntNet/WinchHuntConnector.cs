@@ -153,6 +153,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
                 try
                 {
                     FoxMessage message = JsonConvert.DeserializeObject<FoxMessage>(parsedLoraPacket.Result.JsonData);
+                    message.Rssi = parsedLoraPacket.Result.Rssi;
                     DeviceManager.ProcessFoxMessage(message);
                     parsedFoxMessage = new PacketParseResult<FoxMessage>(message);
                 }

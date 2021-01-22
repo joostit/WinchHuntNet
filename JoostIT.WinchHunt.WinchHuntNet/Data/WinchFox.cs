@@ -18,6 +18,11 @@ namespace JoostIT.WinchHunt.WinchHuntNet.Data
         public GpsInfo Gps { get; set; } = new GpsInfo();
 
         /// <summary>
+        /// Gets or sets the last RSSI at which this Fox was received
+        /// </summary>
+        public int LastRssi { get; set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public WinchFox()
@@ -28,18 +33,18 @@ namespace JoostIT.WinchHunt.WinchHuntNet.Data
         {
             Gps = new GpsInfo();
             CopyDeviceProperties(message);
-            UpdateGpsData(message);
+            Update(message);
         }
 
 
         private void ApplyNewData(FoxMessage message)
         {
-            UpdateGpsData(message);
+            Update(message);
         }
 
 
 
-        internal void UpdateGpsData(FoxMessage message)
+        internal void Update(FoxMessage message)
         {
             Gps.Altitude = message.Gps.Altitude;
             Gps.HasFix = message.Gps.hasFix;
@@ -48,6 +53,8 @@ namespace JoostIT.WinchHunt.WinchHuntNet.Data
             Gps.Longitude = message.Gps.Longitude;
             Gps.Satellites = message.Gps.Satellites;
             Gps.Speed = message.Gps.Speed;
+
+            LastRssi = message.Rssi;
 
             SetLastUpdateNow();
         }

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json.Serialization;
 
 namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
 {
@@ -25,6 +24,13 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
         [JsonProperty("g")]
         public LoraGpsInfo Gps { get; set; }
 
+        /// <summary>
+        /// Gets or sets the RSSI at which this message was received.
+        /// Note that this is not included in the LoRa message sent by the fox itself, but added later.
+        /// </summary>
+        [JsonIgnore]
+        public int Rssi { get; set; }
+
 
         /// <summary>
         /// Returns a string representation of the state of this object
@@ -34,7 +40,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
         {
             if (Device != null && Gps != null)
             {
-                return $"Fox {Device.Id} ({Device.Name}). Gps Fix: {Gps.hasFix} - Sats: {Gps.Satellites} - Speed: {Gps.Speed} - ({Gps.Latitude}, {Gps.Longitude})";
+                return $"Fox {Device.Id} ({Device.Name}) @{Rssi}dB. Gps Fix: {Gps.hasFix} - Sats: {Gps.Satellites} - Speed: {Gps.Speed} - ({Gps.Latitude}, {Gps.Longitude})";
             }
             else
             {

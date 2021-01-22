@@ -125,6 +125,11 @@
             Gets last known GPS state information
             </summary>
         </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Data.WinchFox.LastRssi">
+            <summary>
+            Gets or sets the last RSSI at which this Fox was received
+            </summary>
+        </member>
         <member name="M:JoostIT.WinchHunt.WinchHuntNet.Data.WinchFox.#ctor">
             <summary>
             Constructor
@@ -198,6 +203,12 @@
         <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.FoxMessage.Gps">
             <summary>
             Gets or sets GPS information
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.FoxMessage.Rssi">
+            <summary>
+            Gets or sets the RSSI at which this message was received.
+            Note that this is not included in the LoRa message sent by the fox itself, but added later.
             </summary>
         </member>
         <member name="M:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.FoxMessage.ToString">

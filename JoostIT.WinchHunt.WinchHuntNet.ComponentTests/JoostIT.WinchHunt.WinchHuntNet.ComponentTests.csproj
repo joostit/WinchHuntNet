@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JoostIT.WinchHunt.WinchHuntNet\JoostIT.WinchHunt.WinchHuntNet.csproj" />
+  </ItemGroup>
+
 </Project>

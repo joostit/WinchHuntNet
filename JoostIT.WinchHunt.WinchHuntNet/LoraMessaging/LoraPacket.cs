@@ -16,5 +16,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
 
         public byte Crc { get; set; }
 
+        public int Rssi { get; set; }
+
     }
 }

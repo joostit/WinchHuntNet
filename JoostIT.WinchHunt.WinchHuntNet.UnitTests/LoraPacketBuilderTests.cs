@@ -41,9 +41,9 @@ namespace JoostIT.WinchHunt.WinchHuntNet.UnitTests
         {
             LoraPacketBuilder builder = new LoraPacketBuilder();
 
-            PacketParseResult<LoraPacket> result1 = builder.CreatePacket("");
-            PacketParseResult<LoraPacket> result2 = builder.CreatePacket("1");
-            PacketParseResult<LoraPacket> result3 = builder.CreatePacket("123456789012345678");
+            PacketParseResult<LoraPacket> result1 = builder.ConvertLoraRxToLoraPacket("");
+            PacketParseResult<LoraPacket> result2 = builder.ConvertLoraRxToLoraPacket("1");
+            PacketParseResult<LoraPacket> result3 = builder.ConvertLoraRxToLoraPacket("123456789012345678");
 
             Assert.IsFalse(result1.IsValid);
             Assert.IsFalse(result2.IsValid);
@@ -57,7 +57,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.UnitTests
         {
             LoraPacketBuilder builder = new LoraPacketBuilder();
 
-            LoraPacket result = builder.CreatePacket(ValidPacketString).Result;
+            LoraPacket result = builder.ConvertLoraRxToLoraPacket(ValidPacketString).Result;
 
             Assert.AreEqual(SenderId, result.SenderId);
             Assert.AreEqual(MessageId, result.MessageId);

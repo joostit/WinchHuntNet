@@ -60,7 +60,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
             {
                 if (foxes.ContainsKey(message.Device.Id))
                 {
-                    foxes[message.Device.Id].UpdateGpsData(message);
+                    foxes[message.Device.Id].Update(message);
                     foxUpdated = true;
                 }
                 else

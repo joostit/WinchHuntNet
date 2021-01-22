@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -11,19 +12,44 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
         private const int HexBase = 16;
 
 
-        internal PacketParseResult<LoraPacket> CreatePacket(String data)
+        internal PacketParseResult<LoraPacket> CreatePacket(String rawData)
         {
+            if (rawData == null) { throw new ArgumentNullException("rawData"); }
 
-            PacketParseResult<LoraPacket> retVal;
-            LoraPacket packet = new LoraPacket();
-
-            if (data == null) { throw new ArgumentNullException("data"); }
+            LoraRxSerialPacket rxPacket; 
 
             try
             {
-                if (data.Length < 19) { throw new InvalidDataException($"Minimum data length is 19 characters. Got {data.Length} characters instead."); }
+                rxPacket = JsonConvert.DeserializeObject<LoraRxSerialPacket>(rawData);
+            }
+            catch (JsonException e)
+            {
+                return new PacketParseResult<LoraPacket>(e);
+            }
 
-                string crcValueString = data.Substring(data.Length - 2, 2);
+            PacketParseResult<LoraPacket> result = ConvertLoraRxToLoraPacket(rxPacket.Message);
+
+            if (result.IsValid)
+            {
+                result.Result.Rssi = rxPacket.Rssi;
+            }
+
+            return result;
+
+        }
+
+
+
+        internal PacketParseResult<LoraPacket> ConvertLoraRxToLoraPacket(string rawLoraData)
+        {
+            LoraPacket packet = new LoraPacket();
+            PacketParseResult<LoraPacket> retVal;
+
+            try
+            {
+                if (rawLoraData.Length < 19) { throw new InvalidDataException($"Minimum data length is 19 characters. Got {rawLoraData.Length} characters instead."); }
+
+                string crcValueString = rawLoraData.Substring(rawLoraData.Length - 2, 2);
 
                 try
                 {
@@ -34,7 +60,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
                     throw new InvalidDataException("Could not read CRC bytes. Possibly caused by a malformed message");
                 }
 
-                string CrcDataString = data.Substring(0, data.Length - 2);
+                string CrcDataString = rawLoraData.Substring(0, rawLoraData.Length - 2);
                 byte calculatedCrc = Crc8.CalculateCrc(CrcDataString);
 
                 if (packet.Crc != calculatedCrc)
@@ -42,9 +68,9 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
                     throw new InvalidDataException("CRC Mismatch");
                 }
 
-                packet.SenderId = Convert.ToUInt32(data.Substring(7, 6), HexBase);
-                packet.MessageId = Convert.ToUInt16(data.Substring(13, 4), HexBase);
-                packet.JsonData = data.Substring(17, data.Length - 17 - 2);
+                packet.SenderId = Convert.ToUInt32(rawLoraData.Substring(7, 6), HexBase);
+                packet.MessageId = Convert.ToUInt16(rawLoraData.Substring(13, 4), HexBase);
+                packet.JsonData = rawLoraData.Substring(17, rawLoraData.Length - 17 - 2);
 
                 retVal = new PacketParseResult<LoraPacket>(packet);
             }
@@ -56,11 +82,9 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
             {
                 retVal = new PacketParseResult<LoraPacket>(e);
             }
-            
+
 
             return retVal;
-
-
         }
     }
 }

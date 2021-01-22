@@ -19,12 +19,14 @@ namespace JoostIT.WinchHunt.WhRestConnector
                                         "   -r [rest_url]:      Optional. The full URL of the REST service to connect to and post the WinchHunt " +
                                         "                       data to\n" +
                                         "   -t [api_token]:     Optional and only if rest_url is specified. The access token to be able to post " +
-                                        "                       to the REST service";
+                                        "                       to the REST service" +
+                                        "   -d                  Optional. Enabled Debug mode which will insert fake foxes into the data set.";
 
 
 
         public AppConfiguration LoadConfiguration(string[] args)
         {
+            
             AppConfiguration config = ParseArgs(args);
 
             if (!String.IsNullOrWhiteSpace(config.ConfigurationFile))
@@ -44,42 +46,46 @@ namespace JoostIT.WinchHunt.WhRestConnector
             var comData = data.Global.GetKeyData("com_port");
             var apiTokenData = data.Global.GetKeyData("api_token");
             var restUrlData = data.Global.GetKeyData("rest_url");
+            var debugModeData = data.Global.GetKeyData("debug_mode");
 
             config.ComPort = comData != null ? comData.Value : config.ComPort;
             config.ApiAccessToken = apiTokenData != null ? apiTokenData.Value : config.ApiAccessToken;
             config.RestUrl = restUrlData != null ? restUrlData.Value : config.RestUrl;
+            config.DebugMode = debugModeData != null ? bool.Parse(restUrlData.Value) : config.DebugMode;
         }
 
 
         private AppConfiguration ParseArgs(string[] args)
         {
             if (args.Length < 2) { ThrowInvalidArgumentsException(); }
-            if (args.Length % 2 != 0) { ThrowInvalidArgumentsException(); }
 
             AppConfiguration config = new AppConfiguration();
 
-            for (int i = 0; i < args.Length; i+=2)
+            for (int i = 0; i < args.Length; i++)
             {
                 string option = args[i];
-                string value = args[i + 1];
 
 
                 switch (option.ToLower())
                 {
                     case "-p":
-                        config.ComPort = value;
+                        config.ComPort = args[++i];
                         break;
 
                     case "-t":
-                        config.ApiAccessToken = value;
+                        config.ApiAccessToken = args[++i];
                         break;
 
                     case "-r":
-                        config.RestUrl = value;
+                        config.RestUrl = args[++i];
                         break;
 
                     case "-f":
-                        config.ConfigurationFile = value;
+                        config.ConfigurationFile = args[++i];
+                        break;
+
+                    case "-d":
+                        config.DebugMode = true;
                         break;
 
                     default:

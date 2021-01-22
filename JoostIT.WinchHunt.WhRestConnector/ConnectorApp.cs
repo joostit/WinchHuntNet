@@ -35,18 +35,15 @@ namespace JoostIT.WinchHunt.WhRestConnector
                     return -1;
                 }
 
-                Logger.Log("WinchHunt REST Connector");
-                Logger.Log("(c) 2020-2021 Joost Haverkort");
-                Logger.Log();
-                var ports = connector.GetAvailablePorts();
-                Logger.Log("Available serial ports:");
-                ports.ForEach((i) => Logger.Log("  " + i));
-                Logger.Log();
-                Logger.Log("Connecting to " + config.ComPort);
-
+                PrintWelcomeMessage(connector, config);
 
                 connector.SerialDataRx += Connector_SerialDataRx;
-                connector.Connect(config.ComPort);
+
+                if (!String.IsNullOrWhiteSpace(config.ComPort))
+                {
+                    Logger.Log("Connecting to " + config.ComPort);
+                    connector.Connect(config.ComPort);
+                }
 
                 WebRestClient restClient = new WebRestClient(config);
 
@@ -54,6 +51,61 @@ namespace JoostIT.WinchHunt.WhRestConnector
             }
 
             return 0;
+        }
+
+
+        private void PrintWelcomeMessage(WinchHuntConnector connector, AppConfiguration config)
+        {
+            Logger.Log("WinchHunt REST Connector");
+            Logger.Log("(c) 2020-2021 Joost Haverkort");
+            Logger.Log();
+            PrintConfig(config);
+
+            var ports = connector.GetAvailablePorts();
+            Logger.Log("Available serial ports:");
+            ports.ForEach((i) => Logger.Log("   " + i));
+            Logger.Log();
+        }
+
+
+        private void PrintConfig(AppConfiguration config)
+        {
+            string configFile = "";
+            string debugMode;
+            string comPort = "";
+            string apiKey = "";
+            string restUrl = "";
+
+            Logger.Log("Configuration: ");
+            if (!String.IsNullOrEmpty(config.ConfigurationFile))
+            {
+                configFile = config.ConfigurationFile;
+            }
+
+            if (!String.IsNullOrEmpty(config.ComPort))
+            {
+                comPort = config.ComPort;
+            }
+
+            if (!String.IsNullOrEmpty(config.ApiAccessToken))
+            {
+                apiKey = config.ApiAccessToken;
+            }
+
+            if (!String.IsNullOrEmpty(config.RestUrl))
+            {
+                restUrl = config.RestUrl;
+            }
+
+            debugMode = config.DebugMode.ToString();
+
+
+            Logger.Log($"   Configuration file  :   {configFile}");
+            Logger.Log($"   Debug mode          :   {debugMode}");
+            Logger.Log($"   COM port            :   {comPort}");
+            Logger.Log($"   REST URL            :   {restUrl}");
+            Logger.Log($"   API Token           :   {apiKey}");
+            Logger.Log("");
         }
 
 
@@ -67,7 +119,12 @@ namespace JoostIT.WinchHunt.WhRestConnector
                 {
                     FoxPost post = new FoxPost();
                     post.AccessToken = config.ApiAccessToken;
+
                     post.Devices = new List<WinchFox>(connector.DeviceManager.Foxes.Values);
+                    if (config.DebugMode)
+                    {
+                        AddDebugFoxes(post.Devices);
+                    }
 
                     restClient.sendFoxes(post);
                 }
@@ -96,6 +153,107 @@ namespace JoostIT.WinchHunt.WhRestConnector
                     Logger.Log($"RX: Unsupported packet type: {e.Packet.PacketType}");
                     break;
             }
+        }
+
+
+        private static void AddDebugFoxes(List<WinchFox> retVal)
+        {
+
+            retVal.Add(
+                new WinchFox()
+                {
+                    Device = new DeviceInfo()
+                    {
+                        DeviceType = DeviceTypes.Fox,
+                        Hardware = "V1.2",
+                        Id = "112233",
+                        Name = "FakeFox1",
+                        Version = 1
+                    },
+                    Gps = new GpsInfo()
+                    {
+                        Altitude = 35,
+                        HasFix = true,
+                        Hdop = 2.1,
+                        Satellites = 6,
+                        Speed = 0.01,
+                        Latitude = 52.278721,
+                        Longitude = 6.898578
+                    },
+                    LastUpdate = DateTime.UtcNow
+                });
+
+            retVal.Add(
+                new WinchFox()
+                {
+                    Device = new DeviceInfo()
+                    {
+                        DeviceType = DeviceTypes.Fox,
+                        Hardware = "V1.2",
+                        Id = "AABBCC",
+                        Name = "FakeFox2",
+                        Version = 1
+                    },
+                    Gps = new GpsInfo()
+                    {
+                        Altitude = 35,
+                        HasFix = true,
+                        Hdop = 2.1,
+                        Satellites = 6,
+                        Speed = 0.01,
+                        Latitude = 52.278655,
+                        Longitude = 6.898686
+                    },
+                    LastUpdate = DateTime.UtcNow
+                });
+
+            retVal.Add(
+                new WinchFox()
+                {
+                    Device = new DeviceInfo()
+                    {
+                        DeviceType = DeviceTypes.Fox,
+                        Hardware = "V1.2",
+                        Id = "55EE66",
+                        Name = "FakeFox3",
+                        Version = 1
+                    },
+                    Gps = new GpsInfo()
+                    {
+                        Altitude = 35,
+                        HasFix = true,
+                        Hdop = 2.1,
+                        Satellites = 6,
+                        Speed = 0.01,
+                        Latitude = 52.271880,
+                        Longitude = 6.882657
+                    },
+                    LastUpdate = DateTime.UtcNow
+                });
+
+            retVal.Add(
+                new WinchFox()
+                {
+                    Device = new DeviceInfo()
+                    {
+                        DeviceType = DeviceTypes.Fox,
+                        Hardware = "V1.2",
+                        Id = "77FF88",
+                        Name = "FakeFox4",
+                        Version = 1
+                    },
+                    Gps = new GpsInfo()
+                    {
+                        Altitude = 35,
+                        HasFix = true,
+                        Hdop = 2.1,
+                        Satellites = 6,
+                        Speed = 0.01,
+                        Latitude = 52.275661,
+                        Longitude = 6.894856
+                    },
+                    LastUpdate = DateTime.UtcNow
+                });
         }
 
     }

@@ -39,6 +39,11 @@ namespace JoostIT.WinchHunt.WhRestConnector
         /// </summary>
         public string ConfigurationFile { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether debug mode is enabled
+        /// </summary>
+        public bool DebugMode { get; set; }
+
 
         /// <summary>
         /// Creates a new RunConfiguration based on command line args

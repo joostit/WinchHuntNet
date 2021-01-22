@@ -2,7 +2,7 @@
   "profiles": {
     "JoostIT.WinchHunt.WhRestConnector": {
       "commandName": "Project",
-      "commandLineArgs": "-f \"config.conf\""
+      "commandLineArgs": "-d -r \"https://winchhunt.azurewebsites.net/api/foxes\""
     }
   }
 }

@@ -46,8 +46,6 @@ namespace JoostIT.WinchHunt.WhRestConnector
                 Logger.Log("Error while sending Fox Update to web server: " + e.Flatten().Message);
             }
 
-            //var createdTask = JsonConvert.DeserializeObject<Todo>(await httpResponse.Content.ReadAsStringAsync());
-            //return createdTask;
         }
 
     }

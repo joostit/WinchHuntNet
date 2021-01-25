@@ -12,15 +12,18 @@ namespace JoostIT.WinchHunt.WhRestConnector
 
         public const string helpString = "Usage: WinchHuntCmd [options]\n" +
                                         "   \n" +
-                                        "   -f [config_file]:   The configuration file that contains the application configuration. Configuration " +
-                                        "                       parameters in this file will override command line parameters.\n" +
-                                        "   -p [com_port]:      The COM port name that the Winch Hunt serial device is connected to (as a full, " +
-                                        "                       case-sensitive string)\n" +
-                                        "   -r [rest_url]:      Optional. The full URL of the REST service to connect to and post the WinchHunt " +
-                                        "                       data to\n" +
-                                        "   -t [api_token]:     Optional and only if rest_url is specified. The access token to be able to post " +
-                                        "                       to the REST service" +
-                                        "   -d                  Optional. Enabled Debug mode which will insert fake foxes into the data set.";
+                                        "   -f [config_file]:     The configuration file that contains the application configuration. Configuration " +
+                                        "                         parameters in this file will override command line parameters.\n" +
+                                        "   -p [com_port]:        The COM port name that the Winch Hunt serial device is connected to (as a full, " +
+                                        "                         case-sensitive string)\n" +
+                                        "   -r [rest_url]:        Optional. The full URL of the REST service to connect to and post the WinchHunt " +
+                                        "                         data to\n" +
+                                        "   -t [api_token]:       Optional and only if rest_url is specified. The access token to be able to post " +
+                                        "                         to the REST service" +
+                                        "   -d [debug_mode=true]  Optional. Enables Debug mode which will insert fake foxes into the data set." +
+                                        "                         On the command line, only the -d parameter needs to be specifed, without parameters" +
+                                        "   -i [update_interval]: Optional. Sets the Update interval (in s) for sending data over the REST API. " +
+                                        "                         (Default 2s) ";
 
 
 
@@ -47,11 +50,13 @@ namespace JoostIT.WinchHunt.WhRestConnector
             var apiTokenData = data.Global.GetKeyData("api_token");
             var restUrlData = data.Global.GetKeyData("rest_url");
             var debugModeData = data.Global.GetKeyData("debug_mode");
+            var updateIntervalData = data.Global.GetKeyData("update_interval");
 
             config.ComPort = comData != null ? comData.Value : config.ComPort;
             config.ApiAccessToken = apiTokenData != null ? apiTokenData.Value : config.ApiAccessToken;
             config.RestUrl = restUrlData != null ? restUrlData.Value : config.RestUrl;
             config.DebugMode = debugModeData != null ? bool.Parse(restUrlData.Value) : config.DebugMode;
+            config.UpdateInterval = updateIntervalData != null ? int.Parse(updateIntervalData.Value) : config.UpdateInterval;
         }
 
 
@@ -61,37 +66,49 @@ namespace JoostIT.WinchHunt.WhRestConnector
 
             AppConfiguration config = new AppConfiguration();
 
-            for (int i = 0; i < args.Length; i++)
+            try
             {
-                string option = args[i];
 
-
-                switch (option.ToLower())
+                for (int i = 0; i < args.Length; i++)
                 {
-                    case "-p":
-                        config.ComPort = args[++i];
-                        break;
+                    string option = args[i];
 
-                    case "-t":
-                        config.ApiAccessToken = args[++i];
-                        break;
 
-                    case "-r":
-                        config.RestUrl = args[++i];
-                        break;
+                    switch (option.ToLower())
+                    {
+                        case "-p":
+                            config.ComPort = args[++i];
+                            break;
 
-                    case "-f":
-                        config.ConfigurationFile = args[++i];
-                        break;
+                        case "-t":
+                            config.ApiAccessToken = args[++i];
+                            break;
 
-                    case "-d":
-                        config.DebugMode = true;
-                        break;
+                        case "-r":
+                            config.RestUrl = args[++i];
+                            break;
 
-                    default:
-                        ThrowInvalidArgumentsException();
-                        break;
-                }               
+                        case "-f":
+                            config.ConfigurationFile = args[++i];
+                            break;
+
+                        case "-i":
+                            config.UpdateInterval = int.Parse(args[++i]);
+                            break;
+
+                        case "-d":
+                            config.DebugMode = true;
+                            break;
+
+                        default:
+                            ThrowInvalidArgumentsException();
+                            break;
+                    }
+                }
+
+            } catch (IndexOutOfRangeException)
+            {
+                ThrowInvalidArgumentsException();
             }
 
             return config;

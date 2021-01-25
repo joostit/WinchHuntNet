@@ -42,7 +42,12 @@ namespace JoostIT.WinchHunt.WhRestConnector
         /// <summary>
         /// Gets or sets whether debug mode is enabled
         /// </summary>
-        public bool DebugMode { get; set; }
+        public bool DebugMode { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets the update time interval for sending data over the REST API (in seconds). Default is 2 seconds
+        /// </summary>
+        public int UpdateInterval { get; set; } = 2;
 
 
         /// <summary>

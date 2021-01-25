@@ -14,9 +14,6 @@ namespace JoostIT.WinchHunt.WhRestConnector
     {
 
 
-        private const int updateInterval = 2000;
-
-
         public int Run(string[] args)
         {
 
@@ -74,10 +71,10 @@ namespace JoostIT.WinchHunt.WhRestConnector
         private void PrintConfig(AppConfiguration config)
         {
             string configFile = "";
-            string debugMode;
             string comPort = "";
             string apiKey = "";
             string restUrl = "";
+            
 
             Logger.Log("Configuration: ");
             if (!String.IsNullOrEmpty(config.ConfigurationFile))
@@ -100,14 +97,13 @@ namespace JoostIT.WinchHunt.WhRestConnector
                 restUrl = config.RestUrl;
             }
 
-            debugMode = config.DebugMode.ToString();
-
 
             Logger.Log($"   Configuration file  :   {configFile}");
-            Logger.Log($"   Debug mode          :   {debugMode}");
+            Logger.Log($"   Debug mode          :   {config.DebugMode}");
             Logger.Log($"   COM port            :   {comPort}");
             Logger.Log($"   REST URL            :   {restUrl}");
             Logger.Log($"   API Token           :   {apiKey}");
+            Logger.Log($"   REST Update interval:   {config.UpdateInterval}s");
             Logger.Log("");
         }
 
@@ -116,7 +112,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
         {
             while (true)
             {
-                Thread.Sleep(updateInterval);
+                Thread.Sleep(config.UpdateInterval + 1000);
 
                 if (config.ConnectToRest)
                 {

@@ -160,9 +160,26 @@
             Call this method to indicate that information was updated and to update the time stamp.
             </summary>
         </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.Data.WinchHuntDevice.UpdateDeviceProperties(JoostIT.WinchHunt.WinchHuntNet.Devices.LoraDeviceInfo,JoostIT.WinchHunt.WinchHuntNet.Data.DeviceTypes)">
+            <summary>
+            Updates the device properties 
+            </summary>
+            <param name="deviceInfo"></param>
+            <param name="deviceType"></param>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.Data.WinchHunter">
+            <summary>
+            Represents a Hunter device. This might be the device that receives all LoRa signals.
+            </summary>
+        </member>
         <member name="T:JoostIT.WinchHunt.WinchHuntNet.DeviceManager">
             <summary>
             Manages devices. Note that instances of this class are not completely thread safe
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.DeviceManager.Hunter">
+            <summary>
+            Gets the hunter device to which the system is connected, which receives LoRa data sent by other devices
             </summary>
         </member>
         <member name="P:JoostIT.WinchHunt.WinchHuntNet.DeviceManager.Foxes">
@@ -188,6 +205,53 @@
         <member name="E:JoostIT.WinchHunt.WinchHuntNet.DeviceManager.FoxRemoved">
             <summary>
             Gets raised when a fox is removed from the collection
+            </summary>
+        </member>
+        <member name="E:JoostIT.WinchHunt.WinchHuntNet.DeviceManager.HunterHeartbeatReceived">
+            <summary>
+            Gets raiseed when a heartbeat is received from the hunter
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.DeviceManager.ProcessHeartbeatMessage(JoostIT.WinchHunt.WinchHuntNet.HunterMessaging.HeartbeatPacket)">
+            <summary>
+            Processes a heartbeat message
+            </summary>
+            <param name="packet"></param>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.Devices.LoraDeviceInfo">
+            <summary>
+            Defines Device information as used by LoRa communication
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Devices.LoraDeviceInfo.Name">
+            <summary>
+            Gets or sets the device name
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Devices.LoraDeviceInfo.Id">
+            <summary>
+            Gets or sets the device ID
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Devices.LoraDeviceInfo.Hardware">
+            <summary>
+            Gets or sets the device hardware ID
+            </summary>
+        </member>
+        <member name="P:JoostIT.WinchHunt.WinchHuntNet.Devices.LoraDeviceInfo.Version">
+            <summary>
+            Gets or sets the device version
+            </summary>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.HunterMessaging.HeartbeatPacket.ToString">
+            <summary>
+            Returns a string representation of the state of this object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:JoostIT.WinchHunt.WinchHuntNet.HunterMessaging.HeartbeatPacketBuilder">
+            <summary>
+            Builds a heartbeat packet from serial data
             </summary>
         </member>
         <member name="T:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.FoxMessage">
@@ -216,31 +280,6 @@
             Returns a string representation of the state of this object
             </summary>
             <returns></returns>
-        </member>
-        <member name="T:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraDeviceInfo">
-            <summary>
-            Defines Device information as used by LoRa communication
-            </summary>
-        </member>
-        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraDeviceInfo.Name">
-            <summary>
-            Gets or sets the device name
-            </summary>
-        </member>
-        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraDeviceInfo.Id">
-            <summary>
-            Gets or sets the device ID
-            </summary>
-        </member>
-        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraDeviceInfo.Hardware">
-            <summary>
-            Gets or sets the device hardware ID
-            </summary>
-        </member>
-        <member name="P:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraDeviceInfo.Version">
-            <summary>
-            Gets or sets the device version
-            </summary>
         </member>
         <member name="T:JoostIT.WinchHunt.WinchHuntNet.LoraMessaging.LoraGpsInfo">
             <summary>

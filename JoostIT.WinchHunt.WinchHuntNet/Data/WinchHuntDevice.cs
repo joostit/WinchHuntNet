@@ -1,4 +1,5 @@
-﻿using JoostIT.WinchHunt.WinchHuntNet.LoraMessaging;
+﻿using JoostIT.WinchHunt.WinchHuntNet.Devices;
+using JoostIT.WinchHunt.WinchHuntNet.LoraMessaging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,5 +39,28 @@ namespace JoostIT.WinchHunt.WinchHuntNet.Data
         {
             LastUpdate = DateTime.Now;
         }
+
+
+        /// <summary>
+        /// Updates the device properties 
+        /// </summary>
+        /// <param name="deviceInfo"></param>
+        /// <param name="deviceType"></param>
+        protected void UpdateDeviceProperties(LoraDeviceInfo deviceInfo, DeviceTypes deviceType)
+        {
+            if (Device == null)
+            {
+                Device = new DeviceInfo();
+            }
+
+            Device.DeviceType = deviceType;
+            Device.Hardware = deviceInfo.Hardware;
+            Device.Id = deviceInfo.Id;
+            Device.Name = deviceInfo.Name;
+            Device.Version = deviceInfo.Version;
+
+            SetLastUpdateNow();
+        }
+
     }
 }

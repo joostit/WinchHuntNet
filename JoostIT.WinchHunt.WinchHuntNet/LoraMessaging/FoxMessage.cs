@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using JoostIT.WinchHunt.WinchHuntNet.Devices;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,7 +41,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
         {
             if (Device != null && Gps != null)
             {
-                return $"Fox {Device.Id} ({Device.Name}) @{Rssi}dB. Gps Fix: {Gps.hasFix} - Sats: {Gps.Satellites} - Speed: {Gps.Speed} - ({Gps.Latitude}, {Gps.Longitude})";
+                return $"Fox {Device.Id} ({Device.Name}) @{Rssi}dB. Gps Fix: {Gps.hasFix} - Sats: {Gps.Satellites} - Speed: {Gps.Speed} - Pos: {Gps.Latitude}, {Gps.Longitude}";
             }
             else
             {

@@ -29,10 +29,11 @@ namespace JoostIT.WinchHunt.WinchHuntNet.Data
         {
         }
 
+
         internal WinchFox(FoxMessage message)
         {
             Gps = new GpsInfo();
-            CopyDeviceProperties(message);
+            UpdateDeviceProperties(message.Device, DeviceTypes.Fox);
             Update(message);
         }
 
@@ -60,16 +61,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.Data
         }
 
 
-        private void CopyDeviceProperties(FoxMessage message)
-        {
-            Device = new DeviceInfo();
-            Device.DeviceType = DeviceTypes.Fox;
-            Device.Hardware = message.Device.Hardware;
-            Device.Id = message.Device.Id;
-            Device.Name = message.Device.Name;
-            Device.Version = message.Device.Version;
-        }
-
+        
 
     }
 }

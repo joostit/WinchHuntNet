@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JoostIT.WinchHunt.WinchHuntNet.LoraMessaging
+namespace JoostIT.WinchHunt.WinchHuntNet.Devices
 {
     /// <summary>
     /// Defines Device information as used by LoRa communication

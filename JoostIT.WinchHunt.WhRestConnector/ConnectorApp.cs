@@ -146,7 +146,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
                     break;
 
                 case WinchHuntNet.SerialConnection.SerialPacketTypes.HeartBeat:
-                    Logger.Log("RX: Heartbeat");
+                    Logger.Log($"RX: {e.ResultPackage.ToString()}");
                     break;
 
                 default:

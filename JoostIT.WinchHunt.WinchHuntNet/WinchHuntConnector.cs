@@ -1,4 +1,5 @@
-﻿using JoostIT.WinchHunt.WinchHuntNet.LoraMessaging;
+﻿using JoostIT.WinchHunt.WinchHuntNet.HunterMessaging;
+using JoostIT.WinchHunt.WinchHuntNet.LoraMessaging;
 using JoostIT.WinchHunt.WinchHuntNet.SerialConnection;
 using Newtonsoft.Json;
 using System;
@@ -19,6 +20,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         private const int BaudRate = 115200;
         private SerialPortConnector serialConnection;
         private LoraPacketBuilder lorapacketBuilder = new LoraPacketBuilder();
+        private HeartbeatPacketBuilder heartbeatpacketBuilder = new HeartbeatPacketBuilder();
 
         private bool tryReconnect = true;
         private int autoReconnectTimeout = 5000;
@@ -26,7 +28,9 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         /// <summary>
         /// Gets the device manager that holds access to all known devices
         /// </summary>
-        public DeviceManager DeviceManager { get; private set; } = new DeviceManager();        
+        public DeviceManager DeviceManager { get; private set; } = new DeviceManager();
+
+
 
         /// <summary>
         /// Gets or sets whether there's a live connection to the WincHunt device
@@ -69,7 +73,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
                     WaitAndReconnect();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 serialConnection.Dispose();
                 serialConnection = null;
@@ -123,20 +127,20 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         {
             switch (e.Packet.PacketType)
             {
-                
+
                 case SerialPacketTypes.LoraRx:
-                    PacketParseResult<FoxMessage> parseResult = ProcessLoraPacketReceived(e.Packet);
-                    RaiseSerialDataReceived(e.Packet, parseResult);
+                    PacketParseResult<FoxMessage> foxResult = ProcessLoraPacketReceived(e.Packet);
+                    RaiseSerialDataReceived(e.Packet, foxResult);
                     break;
                 case SerialPacketTypes.HeartBeat:
-                    // ToDo: Process heartbeat signals
-                    RaiseSerialDataReceived(e.Packet);
+                    PacketParseResult<HeartbeatPacket> hbResult = ProcessHeartbeatPacketReceived(e.Packet);
+                    RaiseSerialDataReceived(e.Packet, hbResult);
                     break;
                 case SerialPacketTypes.Invalid:
                 default:
                     throw new NotSupportedException($"Unsupported packet type: {e.Packet.PacketType}");
             }
-            
+
         }
 
 
@@ -149,7 +153,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
 
             if (parsedLoraPacket.IsValid)
             {
-                
+
                 try
                 {
                     FoxMessage message = JsonConvert.DeserializeObject<FoxMessage>(parsedLoraPacket.Result.JsonData);
@@ -157,7 +161,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
                     DeviceManager.ProcessFoxMessage(message);
                     parsedFoxMessage = new PacketParseResult<FoxMessage>(message);
                 }
-                catch(JsonException e)
+                catch (JsonException e)
                 {
                     parsedFoxMessage = new PacketParseResult<FoxMessage>(e);
                 }
@@ -169,6 +173,21 @@ namespace JoostIT.WinchHunt.WinchHuntNet
 
             return parsedFoxMessage;
         }
+
+
+        private PacketParseResult<HeartbeatPacket> ProcessHeartbeatPacketReceived(SerialPacket serialPacket)
+        {
+            PacketParseResult<HeartbeatPacket> result = null;
+
+            result = heartbeatpacketBuilder.CreatePacket(serialPacket.Data);
+            if (result.IsValid)
+            {
+                DeviceManager.ProcessHeartbeatMessage(result.Result);
+            }
+
+            return result;
+        }
+
 
 
         /// <summary>
@@ -204,7 +223,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         /// </summary>
         public WinchHuntConnector()
         {
-            
+
         }
 
         private void RaiseSerialDataReceived(SerialPacket packet, ParseResult message = null)

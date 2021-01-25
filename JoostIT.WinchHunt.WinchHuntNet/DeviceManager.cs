@@ -1,4 +1,5 @@
 ﻿using JoostIT.WinchHunt.WinchHuntNet.Data;
+using JoostIT.WinchHunt.WinchHuntNet.HunterMessaging;
 using JoostIT.WinchHunt.WinchHuntNet.LoraMessaging;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,11 @@ namespace JoostIT.WinchHunt.WinchHuntNet
 
         private readonly Object devicesLock = new object();
         private Dictionary<string, WinchFox> foxes = new Dictionary<string, WinchFox>();
+
+        /// <summary>
+        /// Gets the hunter device to which the system is connected, which receives LoRa data sent by other devices
+        /// </summary>
+        public WinchHunter Hunter { get; private set; }
 
         /// <summary>
         /// Gets known foxes
@@ -48,6 +54,29 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         /// Gets raised when a fox is removed from the collection
         /// </summary>
         public event EventHandler<DeviceEventArgs> FoxRemoved;
+
+        /// <summary>
+        /// Gets raiseed when a heartbeat is received from the hunter
+        /// </summary>
+        public event EventHandler<DeviceEventArgs> HunterHeartbeatReceived;
+
+        /// <summary>
+        /// Processes a heartbeat message
+        /// </summary>
+        /// <param name="packet"></param>
+        internal void ProcessHeartbeatMessage(HeartbeatPacket packet)
+        {
+            if(Hunter == null)
+            {
+                Hunter = new WinchHunter(packet);
+            }
+            else
+            {
+                Hunter.UpdateData(packet);
+            }
+
+            RaiseHunterHeartbeatReceived(Hunter.Device);
+        }
 
 
         internal void ProcessFoxMessage(FoxMessage message)
@@ -127,6 +156,12 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         private void RaiseFoxRemoved(DeviceInfo device)
         {
             FoxRemoved?.Invoke(this, new DeviceEventArgs(device));
+        }
+
+
+        private void RaiseHunterHeartbeatReceived(DeviceInfo device)
+        {
+            HunterHeartbeatReceived?.Invoke(this, new DeviceEventArgs(device));
         }
 
 

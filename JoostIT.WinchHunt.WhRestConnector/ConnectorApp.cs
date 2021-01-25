@@ -14,6 +14,9 @@ namespace JoostIT.WinchHunt.WhRestConnector
     {
 
 
+        private const int updateInterval = 2000;
+
+
         public int Run(string[] args)
         {
 
@@ -113,12 +116,13 @@ namespace JoostIT.WinchHunt.WhRestConnector
         {
             while (true)
             {
-                Thread.Sleep(3000);
+                Thread.Sleep(updateInterval);
 
                 if (config.ConnectToRest)
                 {
                     FoxPost post = new FoxPost();
                     post.AccessToken = config.ApiAccessToken;
+                    post.Hunter = connector.DeviceManager.Hunter;
 
                     post.Devices = new List<WinchFox>(connector.DeviceManager.Foxes.Values);
                     if (config.DebugMode)

@@ -55,7 +55,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
             config.ComPort = comData != null ? comData.Value : config.ComPort;
             config.ApiAccessToken = apiTokenData != null ? apiTokenData.Value : config.ApiAccessToken;
             config.RestUrl = restUrlData != null ? restUrlData.Value : config.RestUrl;
-            config.DebugMode = debugModeData != null ? bool.Parse(restUrlData.Value) : config.DebugMode;
+            config.DebugMode = debugModeData != null ? bool.Parse(debugModeData.Value) : config.DebugMode;
             config.UpdateInterval = updateIntervalData != null ? int.Parse(updateIntervalData.Value) : config.UpdateInterval;
         }
 

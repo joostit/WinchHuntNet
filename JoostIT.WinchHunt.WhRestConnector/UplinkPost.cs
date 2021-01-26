@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JoostIT.WinchHunt.WhRestConnector
 {
-    public class FoxPost
+    public class UplinkPost
     {
 
         /// <summary>

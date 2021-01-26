@@ -116,7 +116,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
 
                 if (config.ConnectToRest)
                 {
-                    FoxPost post = new FoxPost();
+                    UplinkPost post = new UplinkPost();
                     post.AccessToken = config.ApiAccessToken;
                     post.Hunter = connector.DeviceManager.Hunter;
 

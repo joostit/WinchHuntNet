@@ -27,7 +27,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
         }
 
 
-        public void sendFoxes(FoxPost devices)
+        public void sendFoxes(UplinkPost devices)
         {
 
             if (String.IsNullOrEmpty(configuration.RestUrl))
@@ -39,11 +39,14 @@ namespace JoostIT.WinchHunt.WhRestConnector
             try
             {
                 var httpResponse = client.PostAsync(configuration.RestUrl, new StringContent(content, Encoding.Default, "application/json")).Result;
-
+                if (!httpResponse.IsSuccessStatusCode)
+                {
+                    Logger.Log("Error while sending Update : " + httpResponse.ToString());
+                }
             }
             catch (AggregateException e)
             {
-                Logger.Log("Error while sending Fox Update to web server: " + e.Flatten().Message);
+                Logger.Log("Error while sending Update : " + e.Flatten().Message);
             }
 
         }

@@ -48,13 +48,6 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
             if (isDisposed) { throw new ObjectDisposedException("WinchHuntConnector"); }
             if (port != null) { throw new InvalidOperationException("Cannot open the port after it has already been opened (or attempted)"); }
 
-            if (!IsValidPort(portName))
-            {
-                Console.WriteLine($"Serial port '{portName}' does not exist.");
-                portStaysOpen = false;
-                return;
-            }
-
             port = new SerialPort(portName, baudrate, Parity.None, 8);
 
             port.Open();
@@ -113,12 +106,6 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
         private void PacketBuilder_PacketReceived(object sender, NewSerialPacketEventArgs e)
         {
             NewSerialPacket?.Invoke(this, e);
-        }
-
-
-        private bool IsValidPort(string portName)
-        {
-            return GetAvailablePorts().Contains(portName);
         }
 
 

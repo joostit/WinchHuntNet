@@ -41,12 +41,12 @@ namespace JoostIT.WinchHunt.WhRestConnector
                 var httpResponse = client.PostAsync(configuration.RestUrl, new StringContent(content, Encoding.Default, "application/json")).Result;
                 if (!httpResponse.IsSuccessStatusCode)
                 {
-                    Logger.Log("Error while sending Update : " + httpResponse.ToString());
+                    Logger.Log("REST Uplink error: " + httpResponse.ToString());
                 }
             }
             catch (AggregateException e)
             {
-                Logger.Log("Error while sending Update : " + e.Flatten().Message);
+                Logger.Log("REST Uplink error: " + e.Flatten().Message);
             }
 
         }

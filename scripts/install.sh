@@ -26,7 +26,7 @@ sudo systemctl enable whrestconn.service
 echo ""
 echo "Done installing WinchHunt REST Connector."
 echo ""
-echo "//ToDo: Add or update configuration file: /etc/winchuntnet.conf"
+echo "//ToDo: Add or update configuration file: /etc/winchhuntnet.conf"
 echo "To start WinchHunt REST Connector execute 'systemctl start whrestconn.service'"
 echo "or reboot the system"
 echo ""

@@ -24,7 +24,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
 
         private bool tryReconnect = true;
         private const int autoReconnectTimeout = 5_000;
-        private const int heartbeatWatchdogTimeout = 20_000;
+        private const int heartbeatWatchdogTimeout = 32_000;
 
         /// <summary>
         /// Gets the device manager that holds access to all known devices

@@ -80,7 +80,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
                 serialConnection = null;
                 WaitAndReconnect();
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException e)
             {
                 Console.WriteLine("Could not open serial port: " + e.Message.ToString());
                 serialConnection.Dispose();

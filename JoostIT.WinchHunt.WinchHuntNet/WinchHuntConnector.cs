@@ -25,12 +25,12 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         private bool tryReconnect = true;
         private const int autoReconnectTimeout = 5_000;
         private const int heartbeatWatchdogTimeout = 32_000;
+        private WatchDog heartbeatWatchDog;
 
         /// <summary>
         /// Gets the device manager that holds access to all known devices
         /// </summary>
         public DeviceManager DeviceManager { get; private set; } = new DeviceManager();
-
 
 
         /// <summary>
@@ -43,8 +43,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         /// </summary>
         public event DataRxEventHandler SerialDataRx;
 
-        private WatchDog heartbeatWatchDog;
-
+       
         /// <summary>
         /// Connects to a WinchHunt device over the serial port
         /// </summary>

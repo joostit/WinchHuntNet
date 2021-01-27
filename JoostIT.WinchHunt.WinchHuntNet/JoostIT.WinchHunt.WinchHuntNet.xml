@@ -513,6 +513,17 @@
             Constructor
             </summary>
         </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.WatchDog.#ctor(System.Int32)">
+            <summary>
+            Constructor. The timer will start immediately after the watchdog has been instantiated
+            </summary>
+            <param name="timeoutMs">The timeout to be set. </param>
+        </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.WatchDog.KickWatchdog">
+            <summary>
+            Kick the watchdog so it restarts its timeout
+            </summary>
+        </member>
         <member name="T:JoostIT.WinchHunt.WinchHuntNet.WinchHuntConnector">
             <summary>
             Main utility class that connects to a WinchHunt device

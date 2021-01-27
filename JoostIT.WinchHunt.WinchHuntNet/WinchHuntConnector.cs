@@ -23,7 +23,8 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         private HeartbeatPacketBuilder heartbeatpacketBuilder = new HeartbeatPacketBuilder();
 
         private bool tryReconnect = true;
-        private int autoReconnectTimeout = 5000;
+        private const int autoReconnectTimeout = 5_000;
+        private const int heartbeatWatchdogTimeout = 20_000;
 
         /// <summary>
         /// Gets the device manager that holds access to all known devices
@@ -41,6 +42,8 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         /// Gets raised after serial data has been received and processed internally
         /// </summary>
         public event DataRxEventHandler SerialDataRx;
+
+        private WatchDog heartbeatWatchDog;
 
         /// <summary>
         /// Connects to a WinchHunt device over the serial port
@@ -64,48 +67,71 @@ namespace JoostIT.WinchHunt.WinchHuntNet
 
                 if (IsConnected)
                 {
-                    //Console.WriteLine($"{portName} opened sucessfully");
+                    StartHeartbeatWatchdog();
                 }
                 else
                 {
-                    serialConnection.Dispose();
-                    serialConnection = null;
+                    CloseSerialConnection();
                     WaitAndReconnect();
                 }
             }
             catch (IOException e)
             {
                 Console.WriteLine("Could not open serial port: " + e.Message.ToString());
-                serialConnection.Dispose();
-                serialConnection = null;
+                CloseSerialConnection();
                 WaitAndReconnect();
             }
             catch (UnauthorizedAccessException e)
             {
                 Console.WriteLine("Could not open serial port: " + e.Message.ToString());
-                serialConnection.Dispose();
-                serialConnection = null;
+                CloseSerialConnection();
                 WaitAndReconnect();
             }
             catch (Exception e)
             {
-                serialConnection.Dispose();
-                serialConnection = null;
+                CloseSerialConnection();
                 throw e;
             }
         }
 
 
-        private void SerialConnection_PortClosedOnError(object sender, EventArgs e)
+
+        private void StartHeartbeatWatchdog()
+        {
+            heartbeatWatchDog = new WatchDog(heartbeatWatchdogTimeout);
+            heartbeatWatchDog.Expired += HeartbeatWatchDog_Expired;
+        }
+
+
+        private void HeartbeatWatchDog_Expired(object sender, EventArgs e)
+        {
+            Console.WriteLine("Heartbeat timeout occured. Closing serial port and attempting to reconnect.");
+            CloseSerialConnection();
+            WaitAndReconnect();
+        }
+
+
+        private void CloseSerialConnection()
         {
             IsConnected = false;
+
+            if (heartbeatWatchDog != null)
+            {
+                heartbeatWatchDog.Dispose();
+                heartbeatWatchDog = null;
+            }
 
             if (serialConnection != null)
             {
                 serialConnection.Dispose();
                 serialConnection = null;
             }
+        }
 
+
+        private void SerialConnection_PortClosedOnError(object sender, EventArgs e)
+        {
+            CloseSerialConnection();
             WaitAndReconnect();
         }
 
@@ -114,8 +140,6 @@ namespace JoostIT.WinchHunt.WinchHuntNet
         {
             if (tryReconnect)
             {
-
-                //Console.WriteLine($"Trying to reopen in {autoReconnectTimeout / 1000} s");
                 Thread.Sleep(autoReconnectTimeout);
 
                 // Be sure that the value hasn't changed while we were waiting
@@ -197,7 +221,13 @@ namespace JoostIT.WinchHunt.WinchHuntNet
             if (result.IsValid)
             {
                 DeviceManager.ProcessHeartbeatMessage(result.Result);
+                if(heartbeatWatchDog != null)
+                {
+                    heartbeatWatchDog.KickWatchdog();
+                }
             }
+
+
 
             return result;
         }
@@ -226,6 +256,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
                 if (serialConnection != null)
                 {
                     serialConnection.Dispose();
+                    serialConnection = null;
                 }
             }
             isDisposed = true;

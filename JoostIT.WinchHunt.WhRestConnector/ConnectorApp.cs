@@ -41,8 +41,9 @@ namespace JoostIT.WinchHunt.WhRestConnector
 
                 if (!String.IsNullOrWhiteSpace(config.ComPort))
                 {
-                    Logger.Log("Connecting to " + config.ComPort);
+                    Logger.Log("Opening " + config.ComPort);
                     connector.Connect(config.ComPort);
+                    Logger.Log($"Succesfully opened {config.ComPort}");
                 }
 
                 WebRestClient restClient = new WebRestClient(config);

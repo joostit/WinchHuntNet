@@ -72,11 +72,14 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
                 {
                     Thread.Sleep(1000);
 
-                    if (!port.IsOpen)
+                    if (portStaysOpen)
                     {
-                        portStaysOpen = false;
-                        Console.WriteLine("Serial port closed unexpectedly");
-                        ClosePort();
+                        if (!port.IsOpen)
+                        {
+                            portStaysOpen = false;
+                            Console.WriteLine("Serial port closed unexpectedly");
+                            ClosePort();
+                        }
                     }
                 }
             });
@@ -127,6 +130,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet.SerialConnection
         {
             if (disposing)
             {
+                portStaysOpen = false;
                 if(port!= null)
                 {
                     port.Dispose();

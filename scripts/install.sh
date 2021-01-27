@@ -12,7 +12,7 @@ echo "   Stopping existing WinchHunt REST Connector service..."
 systemctl stop whrestconn.service
 sleep 3
 
-echo "   Copying files to /srv/winchuntnet..."
+echo "Publishing files to /srv/winchuntnet..."
 mkdir -p /srv/winchuntnet
 dotnet publish $parent_path/../JoostIT.WinchHunt.WhRestConnector/JoostIT.WinchHunt.WhRestConnector.csproj -c Release -o /srv/winchhuntnet/
 touch /etc/winchuntnet.conf
@@ -26,7 +26,7 @@ sudo systemctl enable whrestconn.service
 echo ""
 echo "Done installing WinchHunt REST Connector."
 echo ""
-echo "//ToDo: Set serial port and REST API configuration/"
+echo "//ToDo: Add or update configuration file: /etc/winchuntnet.conf"
 echo "To start WinchHunt REST Connector execute 'systemctl start whrestconn.service'"
 echo "or reboot the system"
 echo ""

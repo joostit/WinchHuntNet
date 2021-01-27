@@ -73,7 +73,7 @@ namespace JoostIT.WinchHunt.WinchHuntNet
                     WaitAndReconnect();
                 }
             }
-            catch (FileNotFoundException e)
+            catch(IOException e)
             {
                 Console.WriteLine("Could not open serial port: " + e.Message.ToString());
                 serialConnection.Dispose();

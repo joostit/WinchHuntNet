@@ -181,7 +181,8 @@ namespace JoostIT.WinchHunt.WhRestConnector
                         Latitude = 52.278721,
                         Longitude = 6.898578
                     },
-                    LastUpdate = DateTime.UtcNow
+                    LastUpdate = DateTime.UtcNow,
+                    LastRssi = -45
                 });
 
             retVal.Add(
@@ -205,7 +206,8 @@ namespace JoostIT.WinchHunt.WhRestConnector
                         Latitude = 52.278655,
                         Longitude = 6.898686
                     },
-                    LastUpdate = DateTime.UtcNow
+                    LastUpdate = DateTime.UtcNow,
+                    LastRssi = -117
                 });
 
             retVal.Add(
@@ -229,7 +231,8 @@ namespace JoostIT.WinchHunt.WhRestConnector
                         Latitude = 52.271880,
                         Longitude = 6.882657
                     },
-                    LastUpdate = DateTime.UtcNow
+                    LastUpdate = DateTime.UtcNow,
+                    LastRssi = -64
                 });
 
             retVal.Add(
@@ -253,7 +256,8 @@ namespace JoostIT.WinchHunt.WhRestConnector
                         Latitude = 52.275661,
                         Longitude = 6.894856
                     },
-                    LastUpdate = DateTime.UtcNow
+                    LastUpdate = DateTime.UtcNow,
+                    LastRssi = -125
                 });
         }
 

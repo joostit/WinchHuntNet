@@ -93,9 +93,9 @@ steps:
 
 
 - task: DotNetCoreCLI@2
-  displayName: 'Create WinchHuntCmd publish'
+  displayName: 'Create WhRestConnector publish'
   inputs:
-    arguments: '--output $(Build.ArtifactStagingDirectory)/WinchHuntCmd'
+    arguments: '--output $(Build.ArtifactStagingDirectory)/WhRestConnector'
     command: 'publish'
     configuration: $(BuildConfiguration)
     publishWebProjects: false

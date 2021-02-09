@@ -99,14 +99,14 @@ steps:
     command: 'publish'
     configuration: $(BuildConfiguration)
     publishWebProjects: false
-    projects: 'JoostIT.WinchHunt.WinchHuntCmd/JoostIT.WinchHunt.WinchHuntCmd.csproj'
+    projects: 'JoostIT.WinchHunt.WhRestConnector/JoostIT.WinchHunt.WhRestConnector.csproj'
 
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifact WinchHuntCmd'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/WinchHuntCmd'
-    ArtifactName: 'WinchHuntCmd'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/WhRestConnector'
+    ArtifactName: 'WhRestConnector'
     publishLocation: 'Container'
 
 - task: PublishBuildArtifacts@1

@@ -117,37 +117,79 @@ namespace JoostIt.WinchHunt.WhRestConnector
 
         private double FakeMotion(double initial)
         {
-            return initial + ((rand.NextDouble() - 0.5) * 0.00005);
+            if (rand.Next(0, 2) > 0)
+            {
+                return initial + ((rand.NextDouble() - 0.5) * 0.00005);
+            }
+            else
+            {
+                return initial;
+            }
         }
 
 
         private int FakeRssi(int initial)
         {
-            return initial + rand.Next(-5, 5);
+            if (rand.Next(0, 2) > 0)
+            {
+                return initial + rand.Next(-5, 5);
+            }
+            else
+            {
+                return initial;
+            }
         }
 
 
         private int FakeAltitude(int initial)
         {
-            return initial + rand.Next(-6, 6);
+            if (rand.Next(0, 2) > 0)
+            {
+                return initial + rand.Next(-6, 6);
+            }
+            else
+            {
+                return initial;
+            }
         }
 
 
         private int FakeSats(int initial)
         {
-            return initial + rand.Next(-1, 1);
+            if (rand.Next(0, 2) > 0)
+            {
+                return initial + rand.Next(-1, 1);
+            }
+            else
+            {
+                return initial;
+            }
         }
 
 
         private double FakeSpeed(double initial)
         {
-            return initial + ((rand.NextDouble() - 0.5));
+            if (rand.Next(0, 2) > 0)
+            {
+                return initial + ((rand.NextDouble() - 0.5));
+            }
+            else
+            {
+                return initial;
+            }
         }
 
 
         private double FakeHdop(double initial)
         {
-            return initial + ((rand.NextDouble() - 0.5) * 0.1);
+            if (rand.Next(0, 2) > 0)
+            {
+                return initial + ((rand.NextDouble() - 0.5) * 0.1);
+            }
+            else
+            {
+                return initial;
+            }
         }
     }
 }

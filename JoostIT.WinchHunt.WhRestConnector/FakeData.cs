@@ -117,7 +117,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
 
         private double FakeMotion(double initial)
         {
-            if (rand.Next(0, 2) > 0)
+            if (rand.Next(0, 3) < 1)
             {
                 return initial + ((rand.NextDouble() - 0.5) * 0.00005);
             }
@@ -130,7 +130,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
 
         private int FakeRssi(int initial)
         {
-            if (rand.Next(0, 2) > 0)
+            if (rand.Next(0, 3) < 1)
             {
                 return initial + rand.Next(-5, 5);
             }
@@ -143,7 +143,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
 
         private int FakeAltitude(int initial)
         {
-            if (rand.Next(0, 2) > 0)
+            if (rand.Next(0, 3) < 1)
             {
                 return initial + rand.Next(-6, 6);
             }
@@ -156,7 +156,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
 
         private int FakeSats(int initial)
         {
-            if (rand.Next(0, 2) > 0)
+            if (rand.Next(0, 3) < 1)
             {
                 return initial + rand.Next(-1, 1);
             }
@@ -169,7 +169,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
 
         private double FakeSpeed(double initial)
         {
-            if (rand.Next(0, 2) > 0)
+            if (rand.Next(0, 3) < 1)
             {
                 return initial + ((rand.NextDouble() - 0.5));
             }
@@ -182,7 +182,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
 
         private double FakeHdop(double initial)
         {
-            if (rand.Next(0, 2) > 0)
+            if (rand.Next(0, 3) < 1)
             {
                 return initial + ((rand.NextDouble() - 0.5) * 0.1);
             }

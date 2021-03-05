@@ -13,28 +13,24 @@ namespace JoostIT.WinchHunt.WhRestConnector
     class ConnectorApp
     {
 
-
         public int Run(string[] args)
         {
+            AppConfiguration config;
+
+            try
+            {
+                AppConfigurationLoader loader = new AppConfigurationLoader();
+
+                config = loader.LoadConfiguration(args);
+            }
+            catch (InvalidDataException e)
+            {
+                Logger.Log(e.Message);
+                return -1;
+            }
 
             using (WinchHuntConnector connector = new WinchHuntConnector())
             {
-
-
-                AppConfiguration config;
-
-                try
-                {
-                    AppConfigurationLoader loader = new AppConfigurationLoader();
-
-                    config = loader.LoadConfiguration(args);
-                }
-                catch (InvalidDataException e)
-                {
-                    Logger.Log(e.Message);
-                    return -1;
-                }
-
                 PrintWelcomeMessage(connector, config);
 
                 connector.SerialDataRx += Connector_SerialDataRx;
@@ -111,6 +107,13 @@ namespace JoostIT.WinchHunt.WhRestConnector
 
         private void RunProgramLoop(WinchHuntConnector connector, WebRestClient restClient, AppConfiguration config)
         {
+
+            FakeData fakeData = null;
+            if (config.DebugMode)
+            {
+                fakeData = new FakeData();
+            }
+
             while (true)
             {
                 Thread.Sleep(config.UpdateInterval + 1000);
@@ -124,7 +127,8 @@ namespace JoostIT.WinchHunt.WhRestConnector
                     post.Devices = new List<WinchFox>(connector.DeviceManager.Foxes.Values);
                     if (config.DebugMode)
                     {
-                        AddDebugFoxes(post.Devices);
+
+                        fakeData.AddDebugFoxes(post.Devices);
                     }
 
                     restClient.sendFoxes(post);
@@ -157,109 +161,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
         }
 
 
-        private static void AddDebugFoxes(List<WinchFox> retVal)
-        {
-
-            retVal.Add(
-                new WinchFox()
-                {
-                    Device = new DeviceInfo()
-                    {
-                        DeviceType = DeviceTypes.Fox,
-                        Hardware = "V1.2",
-                        Id = "112233",
-                        Name = "FakeFox1",
-                        Version = 1
-                    },
-                    Gps = new GpsInfo()
-                    {
-                        Altitude = 35,
-                        HasFix = true,
-                        Hdop = 2.1,
-                        Satellites = 6,
-                        Speed = 0.01,
-                        Latitude = 52.278721,
-                        Longitude = 6.898578
-                    },
-                    LastUpdate = DateTime.UtcNow,
-                    LastRssi = -45
-                });
-
-            retVal.Add(
-                new WinchFox()
-                {
-                    Device = new DeviceInfo()
-                    {
-                        DeviceType = DeviceTypes.Fox,
-                        Hardware = "V1.2",
-                        Id = "AABBCC",
-                        Name = "FakeFox2",
-                        Version = 1
-                    },
-                    Gps = new GpsInfo()
-                    {
-                        Altitude = 35,
-                        HasFix = true,
-                        Hdop = 2.1,
-                        Satellites = 6,
-                        Speed = 0.01,
-                        Latitude = 52.278655,
-                        Longitude = 6.898686
-                    },
-                    LastUpdate = DateTime.UtcNow,
-                    LastRssi = -117
-                });
-
-            retVal.Add(
-                new WinchFox()
-                {
-                    Device = new DeviceInfo()
-                    {
-                        DeviceType = DeviceTypes.Fox,
-                        Hardware = "V1.2",
-                        Id = "55EE66",
-                        Name = "FakeFox3",
-                        Version = 1
-                    },
-                    Gps = new GpsInfo()
-                    {
-                        Altitude = 35,
-                        HasFix = true,
-                        Hdop = 2.1,
-                        Satellites = 6,
-                        Speed = 0.01,
-                        Latitude = 52.271880,
-                        Longitude = 6.882657
-                    },
-                    LastUpdate = DateTime.UtcNow,
-                    LastRssi = -64
-                });
-
-            retVal.Add(
-                new WinchFox()
-                {
-                    Device = new DeviceInfo()
-                    {
-                        DeviceType = DeviceTypes.Fox,
-                        Hardware = "V1.2",
-                        Id = "77FF88",
-                        Name = "FakeFox4",
-                        Version = 1
-                    },
-                    Gps = new GpsInfo()
-                    {
-                        Altitude = 35,
-                        HasFix = true,
-                        Hdop = 2.1,
-                        Satellites = 6,
-                        Speed = 0.01,
-                        Latitude = 52.275661,
-                        Longitude = 6.894856
-                    },
-                    LastUpdate = DateTime.UtcNow,
-                    LastRssi = -125
-                });
-        }
+        
 
     }
 }

@@ -117,7 +117,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
 
         private double FakeMotion(double initial)
         {
-            return initial + ((rand.NextDouble() - 0.5) * 0.00001);
+            return initial + ((rand.NextDouble() - 0.5) * 0.00005);
         }
 
 

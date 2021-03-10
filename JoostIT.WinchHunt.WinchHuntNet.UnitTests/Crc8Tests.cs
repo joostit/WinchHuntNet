@@ -16,7 +16,6 @@ namespace JoostIT.WinchHunt.WinchHuntNet.UnitTests
         public void TestEmptyStringReturnsFF()
         {
             byte value = Crc8.CalculateCrc("");
-
             Assert.AreEqual(0xFF, value);
         }
 
@@ -31,7 +30,6 @@ namespace JoostIT.WinchHunt.WinchHuntNet.UnitTests
         public void TestSpecificStringReturnsSpecificCrc()
         {
             byte value = Crc8.CalculateCrc(crcString);
-
             Assert.AreEqual(crcByte, value);
         }
 

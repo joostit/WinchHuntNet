@@ -50,7 +50,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
                         Latitude = FakeMotion(52.278721),
                         Longitude = FakeMotion(6.898578)
                     },
-                    LastUpdate = DateTime.UtcNow,
+                    LastUpdate = FakeAge(0),
                     LastRssi = FakeRssi(-45)
                 });
 
@@ -76,7 +76,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
                         Latitude = FakeMotion(52.278655),
                         Longitude = FakeMotion(6.898686)
                     },
-                    LastUpdate = DateTime.UtcNow,
+                    LastUpdate = FakeAge(0),
                     LastRssi = FakeRssi(-117)
                 });
 
@@ -125,10 +125,36 @@ namespace JoostIt.WinchHunt.WhRestConnector
                         Hdop = FakeHdop(2.1),
                         Satellites = FakeSats(6),
                         Speed = FakeSpeed(0),
-                        Latitude = FakeMotion(52.275661),
-                        Longitude = FakeMotion(6.894856)
+                        Latitude = 52.275661,
+                        Longitude = 6.894856
                     },
-                    LastUpdate = DateTime.UtcNow,
+                    LastUpdate = FakeAge(5),
+                    LastRssi = FakeRssi(-125)
+                });
+
+
+            retVal.Add(
+                new WinchFox()
+                {
+                    Device = new DeviceInfo()
+                    {
+                        DeviceType = DeviceTypes.Fox,
+                        Hardware = "V1.2",
+                        Id = "1212AA",
+                        Name = "CalMarker",
+                        Version = 1
+                    },
+                    Gps = new GpsInfo()
+                    {
+                        Altitude = FakeAltitude(35),
+                        HasFix = true,
+                        Hdop = FakeHdop(2.1),
+                        Satellites = FakeSats(8),
+                        Speed = FakeSpeed(0),
+                        Latitude = 52.270090,
+                        Longitude = 6.876613
+                    },
+                    LastUpdate = FakeAge(61),
                     LastRssi = FakeRssi(-125)
                 });
         }
@@ -146,6 +172,11 @@ namespace JoostIt.WinchHunt.WhRestConnector
             }
         }
 
+
+        private DateTime FakeAge(int minutes)
+        {
+            return DateTime.UtcNow - new TimeSpan(0, minutes, 0);
+        }
 
         private int FakeRssi(int initial)
         {

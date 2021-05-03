@@ -28,7 +28,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
 
         public void AddDebugFoxes(List<WinchFox> retVal)
         {
-
+            // Launch site 1
             retVal.Add(
                 new WinchFox()
                 {
@@ -54,6 +54,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
                     LastRssi = FakeRssi(-45)
                 });
 
+            // Launch site 2
             retVal.Add(
                 new WinchFox()
                 {
@@ -79,6 +80,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
                     LastRssi = FakeRssi(-117)
                 });
 
+            // Near fictional winch
             retVal.Add(
                 new WinchFox()
                 {
@@ -104,6 +106,7 @@ namespace JoostIt.WinchHunt.WhRestConnector
                     LastRssi = FakeRssi(-64)
                 });
 
+            // Lost one
             retVal.Add(
                 new WinchFox()
                 {

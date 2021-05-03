@@ -9,11 +9,6 @@ namespace JoostIT.WinchHunt.WhRestConnector
     {
 
         /// <summary>
-        /// Gets or sets the API Access token
-        /// </summary>
-        public string AccessToken { get; set; } = "";
-
-        /// <summary>
         /// Gets or sets the list of Foxes
         /// </summary>
         public List<WinchFox> Devices { get; set; } = new List<WinchFox>();

@@ -108,10 +108,10 @@ namespace JoostIT.WinchHunt.WhRestConnector
         private void RunProgramLoop(WinchHuntConnector connector, WebRestClient restClient, AppConfiguration config)
         {
 
-            FakeData fakeData = null;
+            FakeDataGenerator fakeDataGenerator = null;
             if (config.DebugMode)
             {
-                fakeData = new FakeData();
+                fakeDataGenerator = new FakeDataGenerator();
             }
 
             while (true)
@@ -121,14 +121,13 @@ namespace JoostIT.WinchHunt.WhRestConnector
                 if (config.ConnectToRest)
                 {
                     UplinkPost post = new UplinkPost();
-                    post.AccessToken = config.ApiAccessToken;
                     post.Hunter = connector.DeviceManager.Hunter;
 
                     post.Devices = new List<WinchFox>(connector.DeviceManager.Foxes.Values);
                     if (config.DebugMode)
                     {
-
-                        fakeData.AddDebugFoxes(post.Devices);
+                        fakeDataGenerator.AddDebugFoxes(post.Devices);
+                        post.Hunter = fakeDataGenerator.GetFakeHunter();
                     }
 
                     restClient.sendFoxes(post);
@@ -147,7 +146,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
                     break;
 
                 case WinchHuntNet.SerialConnection.SerialPacketTypes.LoraRx:
-                    Logger.Log($"RX: {e.ResultPackage.ToString()}");
+                    Logger.Log($"RX: {e.ResultPackage}");
                     break;
 
                 case WinchHuntNet.SerialConnection.SerialPacketTypes.HeartBeat:

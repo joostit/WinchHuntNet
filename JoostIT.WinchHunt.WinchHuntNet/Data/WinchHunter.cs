@@ -11,6 +11,13 @@ namespace JoostIT.WinchHunt.WinchHuntNet.Data
     public class WinchHunter : WinchHuntDevice
     {
 
+        /// <summary>
+        /// Creates an empty WinchHunter device
+        /// </summary>
+        public WinchHunter()
+        {
+
+        }
 
         internal WinchHunter(HeartbeatPacket packet)
         {

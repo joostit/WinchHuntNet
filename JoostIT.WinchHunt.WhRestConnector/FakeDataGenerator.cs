@@ -5,10 +5,26 @@ using System.Text;
 
 namespace JoostIt.WinchHunt.WhRestConnector
 {
-    class FakeData
+    class FakeDataGenerator
     {
 
         Random rand = new Random();
+
+        public WinchHunter GetFakeHunter()
+        {
+            return new WinchHunter()
+            {
+                Device = new DeviceInfo()
+                {
+                    DeviceType = DeviceTypes.Hunter,
+                    Hardware = "V1.2",
+                    Id = "443322",
+                    Name = "FakeHunt",
+                    Version = 1
+                },
+                LastUpdate = DateTime.Now
+            };
+        }
 
         public void AddDebugFoxes(List<WinchFox> retVal)
         {

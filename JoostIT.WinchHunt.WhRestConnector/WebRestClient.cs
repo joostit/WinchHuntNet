@@ -12,6 +12,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
 {
     internal class WebRestClient
     {
+        private const string uplinkAccessTokenName = "uplink-access-token";
 
         private readonly HttpClient client = new HttpClient();
 
@@ -20,6 +21,7 @@ namespace JoostIT.WinchHunt.WhRestConnector
         public WebRestClient(AppConfiguration config)
         {
             configuration = config;
+            client.DefaultRequestHeaders.Add(uplinkAccessTokenName, configuration.ApiAccessToken);
         }
 
 

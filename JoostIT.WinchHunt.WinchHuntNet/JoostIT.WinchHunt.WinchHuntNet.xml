@@ -172,6 +172,11 @@
             Represents a Hunter device. This might be the device that receives all LoRa signals.
             </summary>
         </member>
+        <member name="M:JoostIT.WinchHunt.WinchHuntNet.Data.WinchHunter.#ctor">
+            <summary>
+            Creates an empty WinchHunter device
+            </summary>
+        </member>
         <member name="T:JoostIT.WinchHunt.WinchHuntNet.DeviceManager">
             <summary>
             Manages devices. Note that instances of this class are not completely thread safe

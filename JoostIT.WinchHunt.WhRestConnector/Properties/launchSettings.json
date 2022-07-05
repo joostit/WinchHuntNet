@@ -2,7 +2,7 @@
   "profiles": {
     "JoostIT.WinchHunt.WhRestConnector": {
       "commandName": "Project",
-      "commandLineArgs": "-r \"https://localhost:44367/api/uplink\" -t \"LOCALDEBUG\" -d"
+      "commandLineArgs": "-r \"https://localhost:44367/api/uplink\" -t \"0011DEMO2233\" -d"
     }
   }
 }

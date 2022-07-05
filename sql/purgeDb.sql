@@ -1,0 +1,14 @@
+DROP TABLE __EFMigrationsHistory
+DROP TABLE AspNetRoleClaims
+DROP TABLE AspNetUserClaims
+DROP TABLE AspNetUserLogins
+DROP TABLE AspNetUserRoles
+DROP TABLE AspNetUserTokens
+DROP TABLE DeviceCodes
+DROP TABLE UserSites
+DROP TABLE Foxes
+DROP TABLE Hunters
+DROP TABLE PersistedGrants
+DROP TABLE Sites
+DROP TABLE AspNetRoles
+DROP TABLE AspNetUsers
